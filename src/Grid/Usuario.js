@@ -12,49 +12,25 @@ Ext.define('App.Grid.Usuario', {
                 {name: 'idusuario', type: 'integer'},
                 {name: 'nomeusuario', type: 'string'},
                 {name: 'situacao', type: 'string'},
+                {name: 'idsituacao', type: 'integer'},
                 {name: 'emailusuario', type: 'string'},
                 {name: 'loginusuario', type: 'string'},
                 {name: 'senhausuario', type: 'string'},
                 {name: 'confirmarsenhausuario', type: 'string'},
                 {name: 'datacadastro', type: 'date', dateFormat: 'Y-m-d'},
             ],
-            data: [
-                {
-                    idusuario: '1',
-                    nomeusuario: 'Fabio Gomes',
-                    situacao: 'Ativo',
-                    datacadastro: '2016-09-01'
-                },
-                {
-                    idusuario: '2',
-                    nomeusuario: 'Renan',
-                    situacao: 'Ativo',
-                    datacadastro: '2016-09-01'
-                },
-                {
-                    idusuario: '3',
-                    nomeusuario: 'José',
-                    situacao: 'Ativo',
-                    datacadastro: '2016-09-01'
-                },
-                {
-                    idusuario: '4',
-                    nomeusuario: 'Marcos Jeronimex',
-                    situacao: 'Ativo',
-                    datacadastro: '2016-09-01'
-                }
-            ]
-                    /*proxy: {
-                     type: 'ajax',
-                     //url: 'http://www.gazin.com.br/admin/FreteGKOParametrizacao/getParam',
-                     //reader: {type: 'json', root: 'data', totalProperty: 'totalCount'},
-                     simpleSortMode: true
-                     },*/
-                    //remoteSort: true,
-                    /*sorters: [{
-                     property: 'idromaneio',
-                     direction: 'desc'
-                     }]*/
+            
+            proxy: {
+                type: 'ajax',
+                url: 'http://localhost:81/clubes',
+                //reader: {type: 'json', root: 'data', totalProperty: 'totalCount'},
+                simpleSortMode: true
+            },
+            remoteSort: true,
+            sorters: [{
+                    property: 'nomeusuario',
+                    direction: 'desc'
+                }]
         });
 
         this.tbar = {
@@ -83,7 +59,6 @@ Ext.define('App.Grid.Usuario', {
         };
 
         this.columns = [
-
             {
                 text: 'Nome',
                 dataIndex: 'nomeusuario',
@@ -126,11 +101,6 @@ Ext.define('App.Grid.Usuario', {
             }
 
         ];
-
-        this.listeners = {
-            rowclick: 'loadForm',
-            afterLayout: 'loadFormParam'
-        };
 
         this.callParent();
 
