@@ -1,0 +1,18 @@
+{
+  "name": "Trend - Gerenciamento de Projetos",
+  "authors": [
+    "Fabio <fabio.gomes@gazin.com.br>"
+  ],
+  "description": "Gerenciamento de Projetos",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "lib",
+    "test",
+    "tests"
+  ]
+}
