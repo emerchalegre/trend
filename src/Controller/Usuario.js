@@ -14,6 +14,7 @@ Ext.define('App.Controller.Usuario', {
         var self = this;
         self.form.getForm().reset();
         self.window.show();
+
     },
     exitUsuario: function () {
         var self = this;
@@ -43,74 +44,33 @@ Ext.define('App.Controller.Usuario', {
                     self.form.getForm().findField('senhausuario').focus();
                 });
             } else {
-                Ext.MessageBox.confirm('Confirmar', 'Deseja Confirmar?', this.showResult, this);
+                Ext.MessageBox.confirm('Confirmar', 'Deseja Confirmar?', function (btn) {
+
+                    if (btn === 'yes') {
+
+                        self.form.getForm().submit({
+                            url: 'http://localhost:81/clubes',
+                            /*params: {
+                             arquivo: self.formfiltro.getForm().findField('arquivo').fileInputEl.dom.files[0]
+                             },*/
+                            success: function (form, action) {
+                                Trend.MessageBox.success('Dados gravados com sucesso', function () {
+                                    self.window.hide();
+                                    self.grid.store.reload();
+                                    self.form.getForm().reset();
+                                })
+                            },
+                            failure: function (form, action) {
+                                Trend.MessageBox.error('Ocorreu um erro ao gravar', null);
+                            }
+                        });
+
+                    }
+                });
             }
         } else {
-            this.showToast(Ext.String.format('Campos inválidos.'));
+            Trend.MessageBox.showToast('Campos inválidos');
         }
 
-    },
-    showResult: function (btn, text) {
-        var self = this;
-
-        if (btn === 'yes') {
-            
-            loadMask:'salvando',
-
-            self.form.getForm().submit({
-                url: 'http://localhost:81/clubes',
-                /*params: {
-                 arquivo: self.formfiltro.getForm().findField('arquivo').fileInputEl.dom.files[0]
-                 },*/
-                success: function (form, action) {
-                    Ext.MessageBox.alert({
-                        title: 'Sucesso',
-                        message: 'Dados gravados com sucesso',
-                        icon: 'ext-alert-success',
-                        buttons: Ext.MessageBox.OK,
-                        fn: function () {
-                            //self.showToast(Ext.String.format('Dados gravados com sucesso'));
-                            self.window.hide();
-                            self.grid.store.reload();
-                            self.form.getForm().reset();
-                        }
-                    });
-                },
-                failure: function (form, action) {
-                    Ext.MessageBox.alert({
-                        title: 'Erro',
-                        message: 'Ocorreu um erro ao gravar os dados',
-                        icon: Ext.MessageBox.ERROR,
-                        buttons: Ext.MessageBox.OK,
-                        fn: function () {
-                            //self.grid.store.load()
-                        }
-                    });
-                }
-            });
-
-        }
-    },
-    showToast: function (s, title) {
-        Ext.toast({
-            html: s,
-            closable: false,
-            align: 't',
-            slideInDuration: 400,
-            minWidth: 400,
-            constrain: true
-        });
-    },
-    alertInfo: function (msg, func) {
-        Ext.MessageBox.alert({
-            title: 'Atenção',
-            message: msg,
-            icon: Ext.MessageBox.WARNING,
-            buttons: Ext.MessageBox.OK,
-            constrain: true,
-            fn: function () {
-                func();
-            }
-        });
     }
 });
