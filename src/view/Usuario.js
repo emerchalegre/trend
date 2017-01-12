@@ -5,14 +5,6 @@ Ext.define('App.view.Usuario', {
     layout: 'border',
     iconCls: 'x-fa fa-user',
     title: 'Cadastro de Usuário',
-    tools: [
-        {
-            type: 'refresh',
-            handler: function () {
-                //parent.app.Tab.reloadById(window.idTab, document.location.href);
-            }
-        }
-    ],
     initComponent: function () {
 
         this.closable = true;
@@ -27,6 +19,9 @@ Ext.define('App.view.Usuario', {
             tools: [
                 {
                     type: 'refresh',
+                    handler: function () {
+                        //parent.App.Tab.reloadById(window.idTab, document.location.href);
+                    }
                 }
             ]
         });

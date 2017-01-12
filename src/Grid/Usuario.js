@@ -19,10 +19,9 @@ Ext.define('App.Grid.Usuario', {
                 {name: 'confirmarsenhausuario', type: 'string'},
                 {name: 'datacadastro', type: 'date', dateFormat: 'Y-m-d'},
             ],
-            
             proxy: {
                 type: 'ajax',
-                url: 'http://localhost:81/clubes',
+                url: App.Path + 'usuarios',
                 //reader: {type: 'json', root: 'data', totalProperty: 'totalCount'},
                 simpleSortMode: true
             },

@@ -37,10 +37,12 @@ Ext.define('App.Controller.Usuario', {
     salvarUsuario: function () {
 
         var self = this;
+        var data = self.form.getValues();
+        var id = self.form.getForm().findField('idusuario').getValue();
 
         if (self.form.isValid()) {
             if (self.form.getForm().findField('senhausuario').getValue() != self.form.getForm().findField('confirmarsenhausuario').getValue()) {
-                self.alertInfo('As senhas não correspondem', function () {
+                App.MessageBox.warning('As senhas não correspondem', function () {
                     self.form.getForm().findField('senhausuario').focus();
                 });
             } else {
@@ -48,28 +50,36 @@ Ext.define('App.Controller.Usuario', {
 
                     if (btn === 'yes') {
 
-                        self.form.getForm().submit({
-                            url: 'http://localhost:81/clubes',
-                            /*params: {
-                             arquivo: self.formfiltro.getForm().findField('arquivo').fileInputEl.dom.files[0]
-                             },*/
+                        App.Ajax.request('usuarios', data, this.form, function (retorno) {
+                            if (retorno.success) {
+                                App.MessageBox.success('Dados gravados com sucesso', function () {
+                                    self.window.hide();
+                                    self.grid.store.reload();
+                                    self.form.getForm().reset();
+                                })
+                            } else {
+                                App.MessageBox.error('Ocorreu um erro ao gravar', function () {});
+                            }
+                        });
+                        
+                        /*self.form.getForm().submit({
+                            url: App.Path + 'usuarios',
                             success: function (form, action) {
-                                Trend.MessageBox.success('Dados gravados com sucesso', function () {
+                                App.MessageBox.success('Dados gravados com sucesso', function () {
                                     self.window.hide();
                                     self.grid.store.reload();
                                     self.form.getForm().reset();
                                 })
                             },
                             failure: function (form, action) {
-                                Trend.MessageBox.error('Ocorreu um erro ao gravar', null);
+                                App.MessageBox.error('Ocorreu um erro ao gravar', function(){});
                             }
-                        });
-
+                        });*/
                     }
                 });
             }
         } else {
-            Trend.MessageBox.showToast('Campos inválidos');
+            App.MessageBox.showToast('Campos inválidos');
         }
 
     }

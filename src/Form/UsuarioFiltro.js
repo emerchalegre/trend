@@ -5,7 +5,8 @@ Ext.define('App.Form.UsuarioFiltro', {
 
         this.buttonPesquisar = Ext.create('Ext.Button', {
             iconCls: 'x-fa fa-search',
-            handler: 'pesquisarUsuario'
+            handler: 'pesquisarUsuario',
+            tooltip: 'Pesquisar'
         });
 
         this.items = [

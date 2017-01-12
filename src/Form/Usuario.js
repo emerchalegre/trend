@@ -21,6 +21,7 @@ Ext.define('App.Form.Usuario', {
             fieldLabel:'Status',
             queryMode: 'local',
             displayField: 'name',
+            name:'idsituacao',
             valueField: 'idsituacao',
             value:1,
             allowBlank:false,
@@ -48,6 +49,7 @@ Ext.define('App.Form.Usuario', {
                                 xtype: 'textfield',
                                 fieldLabel: 'Nome',
                                 name: 'nomeusuario',
+                                allowBlank:false,
                                 flex: 1
                             },
                             {
