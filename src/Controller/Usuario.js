@@ -38,7 +38,14 @@ Ext.define('App.Controller.Usuario', {
 
         var self = this;
         var data = self.form.getValues();
+        
+        //validar rota de insert/update
         var id = self.form.getForm().findField('idusuario').getValue();
+        if (id === ''){
+            var rota = 'usuarios';
+        }else{
+            var rota = 'usuarios/'+id;
+        }
 
         if (self.form.isValid()) {
             if (self.form.getForm().findField('senhausuario').getValue() != self.form.getForm().findField('confirmarsenhausuario').getValue()) {
@@ -50,7 +57,7 @@ Ext.define('App.Controller.Usuario', {
 
                     if (btn === 'yes') {
 
-                        App.Ajax.request('usuarios', data, this.form, function (retorno) {
+                        App.Ajax.request(rota, data, this.form, function (retorno) {
                             if (retorno.success) {
                                 App.MessageBox.success('Dados gravados com sucesso', function () {
                                     self.window.hide();
