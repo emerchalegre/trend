@@ -2,9 +2,12 @@ Ext.define('App.Panel.Menu', {
     extend: 'Ext.panel.Panel',
     xtype: 'tree-menu',
     layout: 'border',
+    border: false,
+    
     listeners: {
         render: 'onToggleNav',
     },
+    
     header: {
         items: [
             {
@@ -13,8 +16,10 @@ Ext.define('App.Panel.Menu', {
                 enableToggle: true,
                 iconCls: 'fa fa-bars',
                 scale: 'small',
-                toggleHandler: 'onToggleMicro'
-                
+                buttonAlign: 'left',
+                toggleHandler: 'onToggleMicro',
+                tooltip: 'Comprimir/Expandir'
+
             }]
     },
     items: [{

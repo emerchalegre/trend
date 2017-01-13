@@ -1,24 +1,24 @@
-Ext.define('App.view.Usuario', {
+Ext.define('App.view.Programadores', {
     extend: 'Ext.panel.Panel',
-    requires: ['App.Controller.Usuario'],
-    controller: 'usuario',
+    requires: ['App.Controller.Programadores'],
+    controller: 'programadores',
     layout: 'border',
-    iconCls: 'x-fa fa-user',
-    title: 'Cadastro de Usuário',
+    iconCls: 'x-fa fa-code',
+    title: 'Cadastro de Programadores',
     initComponent: function () {
 
         this.closable = true;
 
-        this.form = Ext.create('App.Form.UsuarioFiltro', {
+        this.form = Ext.create('App.Form.ProgramadoresFiltro', {
             reference: 'formfiltro',
         });
 
-        this.grid = Ext.create('App.Grid.Usuario', {
+        this.grid = Ext.create('App.Grid.Programadores', {
             reference: 'grid',
             region: 'center'
         });
 
-        this.window = Ext.create('App.Window.Usuario', {
+        this.window = Ext.create('App.Window.Programadores', {
             reference: 'window'
         });
 

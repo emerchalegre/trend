@@ -2,6 +2,7 @@ Ext.define('App.Tab.Principal', {
     extend: 'Ext.tab.Panel',
     xtype: 'tab-principal',
     plain: true,
+    border:false,
     initComponent: function () {
 
         var self = this;

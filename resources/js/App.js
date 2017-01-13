@@ -67,10 +67,10 @@ App.MessageBox = {
 
 App.Ajax = {
     trial: null,
-    request: function (url, dados, elementmask, callback) {
+    request: function (type, url, dados, elementmask, callback) {
 
         $.ajax({
-            type: 'POST',
+            type: type,
             async: true,
             url: App.Path + url,
             contentType: "application/x-www-form-urlencoded;charset=utf-8",

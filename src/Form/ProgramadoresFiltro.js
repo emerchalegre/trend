@@ -1,11 +1,11 @@
-Ext.define('App.Form.UsuarioFiltro', {
+Ext.define('App.Form.ProgramadoresFiltro', {
     extend: 'Ext.form.Panel',
-    xtype: 'form-usuariofiltro',
+    xtype: 'form-programadorfiltro',
     region: 'north',
     autoHeight: true,
     bodyPadding: 10,
-    title: 'Cadastro de Usuário',
-    iconCls: 'x-fa fa-user',
+    title: 'Cadastro de Programadores',
+    iconCls: 'x-fa fa-code',
     tools: [
         {
             type: 'refresh',
@@ -18,7 +18,7 @@ Ext.define('App.Form.UsuarioFiltro', {
 
         this.buttonPesquisar = Ext.create('Ext.Button', {
             iconCls: 'x-fa fa-search',
-            handler: 'pesquisarUsuario',
+            handler: 'pesquisarProgramador',
             tooltip: 'Pesquisar'
         });
 
@@ -38,7 +38,7 @@ Ext.define('App.Form.UsuarioFiltro', {
                             {
                                 xtype: 'textfield',
                                 fieldLabel: 'Nome',
-                                name: 'nomeusuario',
+                                name: 'nomeprogramador',
                                 width: '40%',
                                 emptyText: 'Pesquisar por Nome'
                             },

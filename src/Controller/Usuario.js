@@ -38,13 +38,17 @@ Ext.define('App.Controller.Usuario', {
 
         var self = this;
         var data = self.form.getValues();
-        
+        var rota;
+        var type;
+
         //validar rota de insert/update
         var id = self.form.getForm().findField('idusuario').getValue();
-        if (id === ''){
-            var rota = 'usuarios';
-        }else{
-            var rota = 'usuarios/'+id;
+        if (id === '') {
+            rota = 'usuarios';
+            type = 'POST'
+        } else {
+            rota = 'usuarios/' + id;
+            type = 'PATCH';
         }
 
         if (self.form.isValid()) {
@@ -57,7 +61,7 @@ Ext.define('App.Controller.Usuario', {
 
                     if (btn === 'yes') {
 
-                        App.Ajax.request(rota, data, this.form, function (retorno) {
+                        App.Ajax.request(type, rota, data, this.form, function (retorno) {
                             if (retorno.success) {
                                 App.MessageBox.success('Dados gravados com sucesso', function () {
                                     self.window.hide();
@@ -68,20 +72,20 @@ Ext.define('App.Controller.Usuario', {
                                 App.MessageBox.error('Ocorreu um erro ao gravar', function () {});
                             }
                         });
-                        
+
                         /*self.form.getForm().submit({
-                            url: App.Path + 'usuarios',
-                            success: function (form, action) {
-                                App.MessageBox.success('Dados gravados com sucesso', function () {
-                                    self.window.hide();
-                                    self.grid.store.reload();
-                                    self.form.getForm().reset();
-                                })
-                            },
-                            failure: function (form, action) {
-                                App.MessageBox.error('Ocorreu um erro ao gravar', function(){});
-                            }
-                        });*/
+                         url: App.Path + 'usuarios',
+                         success: function (form, action) {
+                         App.MessageBox.success('Dados gravados com sucesso', function () {
+                         self.window.hide();
+                         self.grid.store.reload();
+                         self.form.getForm().reset();
+                         })
+                         },
+                         failure: function (form, action) {
+                         App.MessageBox.error('Ocorreu um erro ao gravar', function(){});
+                         }
+                         });*/
                     }
                 });
             }
@@ -89,5 +93,28 @@ Ext.define('App.Controller.Usuario', {
             App.MessageBox.showToast('Campos inválidos');
         }
 
+    },
+    excluirUsuario: function (grid, rowIndex, colIndex) {
+        var self = this;
+        var record = grid.getStore().getAt(rowIndex);
+        var rota = 'usuarios/' + record.data.idusuario;
+        var nomeusuario = record.data.nomeusuario;
+
+        Ext.MessageBox.confirm('Confirmar', 'Deseja excluir o usuário <b>'+nomeusuario+'</b> ?', function (btn) {
+
+            if (btn === 'yes') {
+
+                App.Ajax.request('DELETE', rota, null, this.form, function (retorno) {
+                    if (retorno.success) {
+                        App.MessageBox.success('Dados gravados com sucesso', function () {
+                            self.grid.store.reload();
+                        })
+                    } else {
+                        App.MessageBox.error('Ocorreu um erro ao gravar', function () {});
+                    }
+                });
+
+            }
+        });
     }
 });

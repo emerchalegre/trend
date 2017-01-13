@@ -20,14 +20,14 @@ Ext.define('App.view.Main', {
             {
                 xtype: 'tree-menu',
                 region: 'west',
-                title: 'Trend',
+                title: 'Menu',
                 iconCls: 'x-fa fa-codepen',
                 width: 300
             },
             {
                 xtype: 'panel-principal',
                 region: 'center',
-                //title: 'Trend - Gerenciamento de Projetos',
+                title: 'Trend - Gerenciamento de Projetos',
                 //iconCls: 'x-fa fa-trello',
                 header: {
                     titleAlign: 'center'
