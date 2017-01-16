@@ -31,8 +31,30 @@ Ext.define('App.Controller.Usuario', {
     },
     imprimirUsuario: function () {
         var self = this;
-
         self.windowprint.show();
+    },
+    pesquisarUsuario:function(){
+        var self = this;
+        var rota;
+        var nome = self.formfiltro.getForm().findField('nomeusuario').getValue();
+        
+        if(nome === ''){
+            rota = 'usuarios';
+        }else{
+            rota = 'usuarios/'+nome;
+        }
+        
+        App.Ajax.request('GET', rota, null, self.grid, function (retorno) {
+            self.grid.store.loadData(retorno);
+        });
+    },
+    limparUsuario:function(){
+        var self = this;
+        self.formfiltro.getForm().reset();
+    },
+    atualizarUsuario:function(){
+        var self = this;
+        self.grid.store.reload();
     },
     salvarUsuario: function () {
 
@@ -54,7 +76,7 @@ Ext.define('App.Controller.Usuario', {
         if (self.form.isValid()) {
             if (self.form.getForm().findField('senhausuario').getValue() != self.form.getForm().findField('confirmarsenhausuario').getValue()) {
                 App.MessageBox.warning('As senhas não correspondem', function () {
-                    self.form.getForm().findField('senhausuario').focus();
+                    self.form.getForm().findField('confirmarsenhausuario').focus();
                 });
             } else {
                 Ext.MessageBox.confirm('Confirmar', 'Deseja Confirmar?', function (btn) {

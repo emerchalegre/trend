@@ -5,6 +5,7 @@ Ext.define('App.view.Usuario', {
     layout: 'border',
     iconCls: 'x-fa fa-user',
     title: 'Cadastro de Usuário',
+    border:false,
     initComponent: function () {
 
         this.closable = true;

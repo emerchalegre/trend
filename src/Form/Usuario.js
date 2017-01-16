@@ -1,6 +1,7 @@
 Ext.define('App.Form.Usuario', {
     extend: 'Ext.form.Panel',
     xtype: 'form-usuario',
+    border:false,
     fieldDefaults: {
         labelWidth: 60
     },

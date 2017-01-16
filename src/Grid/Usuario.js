@@ -1,6 +1,7 @@
 Ext.define('App.Grid.Usuario', {
     extend: 'Ext.grid.Panel',
     xtype: 'grid-usuario',
+    border:false,
     initComponent: function () {
 
         var self = this;
@@ -36,6 +37,12 @@ Ext.define('App.Grid.Usuario', {
             items: [
                 {
                     cls: 'button-tool',
+                    handler: 'atualizarUsuario',
+                    iconCls: 'x-fa fa-refresh',
+                    tooltip: 'Atualizar'
+                },
+                {
+                    cls: 'button-tool',
                     handler: 'exportarUsuario',
                     iconCls: 'x-fa fa-file-excel-o',
                     tooltip: 'Exportar'
@@ -64,7 +71,7 @@ Ext.define('App.Grid.Usuario', {
                 flex: 1
             },
             {
-                text: 'Data',
+                text: 'Data Cadastro',
                 dataIndex: 'datacadastro',
                 flex: 1,
                 sortable: true,

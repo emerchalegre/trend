@@ -1,6 +1,7 @@
 Ext.define('App.Grid.Programadores', {
     extend: 'Ext.grid.Panel',
     xtype: 'grid-programadores',
+    border:false,
     initComponent: function () {
 
         var self = this;

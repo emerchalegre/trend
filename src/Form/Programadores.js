@@ -1,6 +1,7 @@
 Ext.define('App.Form.Programadores', {
     extend: 'Ext.form.Panel',
     xtype: 'form-programador',
+    border:false,
     fieldDefaults: {
         labelWidth: 60
     },

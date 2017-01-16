@@ -6,6 +6,7 @@ Ext.define('App.Form.ProgramadoresFiltro', {
     bodyPadding: 10,
     title: 'Cadastro de Programadores',
     iconCls: 'x-fa fa-code',
+    border:false,
     tools: [
         {
             type: 'refresh',

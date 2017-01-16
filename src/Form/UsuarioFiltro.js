@@ -6,6 +6,7 @@ Ext.define('App.Form.UsuarioFiltro', {
     bodyPadding: 10,
     title: 'Cadastro de Usuário',
     iconCls: 'x-fa fa-user',
+    border:false,
     tools: [
         {
             type: 'refresh',
@@ -20,6 +21,12 @@ Ext.define('App.Form.UsuarioFiltro', {
             iconCls: 'x-fa fa-search',
             handler: 'pesquisarUsuario',
             tooltip: 'Pesquisar'
+        });
+        
+        this.buttonLimpar = Ext.create('Ext.Button', {
+            iconCls: 'x-fa fa-eraser',
+            handler: 'limparUsuario',
+            tooltip: 'Limpar'
         });
 
         this.items = [
@@ -45,7 +52,11 @@ Ext.define('App.Form.UsuarioFiltro', {
                             {
                                 xtype: 'splitter'
                             },
-                            this.buttonPesquisar
+                            this.buttonPesquisar,
+                            {
+                                xtype: 'splitter'
+                            },
+                            this.buttonLimpar
                         ]
                     }
                 ]
