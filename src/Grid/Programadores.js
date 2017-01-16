@@ -34,6 +34,12 @@ Ext.define('App.Grid.Programadores', {
             items: [
                 {
                     cls: 'button-tool',
+                    handler: 'atualizarProgramador',
+                    iconCls: 'x-fa fa-refresh',
+                    tooltip: 'Atualizar'
+                },
+                {
+                    cls: 'button-tool',
                     handler: 'exportarProgramador',
                     iconCls: 'x-fa fa-file-excel-o',
                     tooltip: 'Exportar'

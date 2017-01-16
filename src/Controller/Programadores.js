@@ -34,6 +34,30 @@ Ext.define('App.Controller.Programadores', {
 
         self.windowprint.show();
     },
+    limparProgramador: function () {
+        var self = this;
+
+        self.formfiltro.getForm().reset();
+    },
+    atualizarProgramador:function(){
+        var self = this;
+        self.grid.store.reload();
+    },
+    pesquisarProgramador:function(){
+        var self = this;
+        var rota;
+        var nome = self.formfiltro.getForm().findField('nomeprogramador').getValue();
+        
+        if(nome === ''){
+            rota = 'programadores';
+        }else{
+            rota = 'programadores/'+nome;
+        }
+        
+        App.Ajax.request('GET', rota, null, self.grid, function (retorno) {
+            self.grid.store.loadData(retorno);
+        });
+    },
     salvarProgramador: function () {
 
         var self = this;
@@ -80,9 +104,9 @@ Ext.define('App.Controller.Programadores', {
         var self = this;
         var record = grid.getStore().getAt(rowIndex);
         var rota = 'programadores/' + record.data.idprogramador;
-        var nomeprogramador = record.data.nomeusuario;
+        var nomeprogramador = record.data.nomeprogramador;
 
-        Ext.MessageBox.confirm('Confirmar', 'Deseja excluir o usuário <b>' + nomeprogramador + '</b> ?', function (btn) {
+        Ext.MessageBox.confirm('Confirmar', 'Deseja excluir o programador <b>' + nomeprogramador + '</b> ?', function (btn) {
 
             if (btn === 'yes') {
 

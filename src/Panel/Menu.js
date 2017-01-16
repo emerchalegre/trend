@@ -38,7 +38,7 @@ Ext.define('App.Panel.Menu', {
                     listeners: {
                         itemclick: function (sender, info, eOpts) {
 
-                            app.getMainView().tab.add(Ext.create('App.view.Usuario'));
+                            app.getMainView().tab.add(Ext.create('App.view.Programadores'));
                         }
                     },
                     store: {

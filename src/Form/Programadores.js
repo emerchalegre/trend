@@ -37,6 +37,10 @@ Ext.define('App.Form.Programadores', {
                 },
                 items: [
                     {
+                        xtype:'hidden',
+                        name:'idprogramador'
+                    },
+                    {
                         xtype: 'textfield',
                         fieldLabel: 'Nome',
                         name: 'nomeprogramador',

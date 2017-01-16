@@ -22,6 +22,12 @@ Ext.define('App.Form.ProgramadoresFiltro', {
             handler: 'pesquisarProgramador',
             tooltip: 'Pesquisar'
         });
+        
+        this.buttonLimpar = Ext.create('Ext.Button', {
+            iconCls: 'x-fa fa-eraser',
+            handler: 'limparProgramador',
+            tooltip: 'Limpar'
+        });
 
         this.items = [
             {
@@ -46,7 +52,11 @@ Ext.define('App.Form.ProgramadoresFiltro', {
                             {
                                 xtype: 'splitter'
                             },
-                            this.buttonPesquisar
+                            this.buttonPesquisar,
+                            {
+                                xtype: 'splitter'
+                            },
+                            this.buttonLimpar
                         ]
                     }
                 ]

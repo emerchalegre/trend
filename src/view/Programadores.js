@@ -5,6 +5,7 @@ Ext.define('App.view.Programadores', {
     layout: 'border',
     iconCls: 'x-fa fa-code',
     title: 'Cadastro de Programadores',
+    border:false,
     initComponent: function () {
 
         this.closable = true;
