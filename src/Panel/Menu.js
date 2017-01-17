@@ -3,29 +3,25 @@ Ext.define('App.Panel.Menu', {
     xtype: 'tree-menu',
     layout: 'border',
     border: false,
-    
+    //collapsible: true,
     listeners: {
         render: 'onToggleNav',
     },
     
-    header: {
-        items: [
-            {
-                //xtype: 'button',
-                cls: 'button-tool',
-                enableToggle: true,
-                iconCls: 'fa fa-bars',
-                scale: 'small',
-                buttonAlign: 'left',
-                toggleHandler: 'onToggleMicro',
-                tooltip: 'Comprimir/Expandir'
-
-            }]
-    },
     items: [{
+            title: 'Menu',
+            iconCls: 'x-fa fa-codepen',
             region: 'center',
             split: true,
             reference: 'treelistContainer',
+            tools: [
+                {
+                    iconCls: 'fa fa-bars',
+                    cls: 'button-tool',
+                    tooltip: 'Comprimir/Expandir',
+                    handler: 'onToggleMicro',
+                }
+            ],
             layout: {
                 type: 'vbox',
                 align: 'stretch'
@@ -50,6 +46,11 @@ Ext.define('App.Panel.Menu', {
                                     expanded: false,
                                     iconCls: 'x-fa fa-briefcase',
                                     children: [
+                                        {
+                                            text: 'Cadastro de Programadores',
+                                            leaf: true,
+                                            iconCls: 'x-fa fa-code'
+                                        },
                                         {
                                             text: 'Cadastro de Projeto',
                                             leaf: true,

@@ -5,22 +5,25 @@ Ext.define('App.Controller.Menu', {
     init: function () {
         
         this.tab = this.lookupReference('tab');
-
+        this.navBtn = this.lookupReference('treelistContainer');
+        this.treelist = this.lookupReference('treelist');
     },
 
     onToggleConfig: function (menuitem) {
-        var treelist = this.lookupReference('treelist');
+        var treelist = this.treelist;
         treelist.setConfig(menuitem.config, menuitem.checked);
     },
 
     onToggleMicro: function (button, pressed) {
-        var treelist = this.lookupReference('treelist'),
-            navBtn = this.lookupReference('navBtn'),
-            ct = treelist.ownerCt;
-
+        
+        var treelist = this.treelist,
+            navBtn = this.navBtn,
+            ct = treelist.ownerCt.ownerCt;
+    
         treelist.setMicro(pressed);
 
         if (pressed) {
+            console.log(navBtn);
             navBtn.setPressed(true);
             navBtn.disable();
             this.oldWidth = ct.width;

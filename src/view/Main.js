@@ -20,8 +20,6 @@ Ext.define('App.view.Main', {
             {
                 xtype: 'tree-menu',
                 region: 'west',
-                title: 'Menu',
-                iconCls: 'x-fa fa-codepen',
                 width: 300
             },
             {
