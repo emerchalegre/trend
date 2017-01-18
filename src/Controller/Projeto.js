@@ -4,88 +4,35 @@ Ext.define('App.Controller.Projeto', {
     init: function (view) {
 
         this.formfiltro = this.lookupReference('formfiltro');
-        this.panel = this.lookupReference('panel');
+        this.formProjeto = this.lookupReference('form');
+        this.card = this.lookupReference('card');
         this.grid = this.lookupReference('grid');
         this.window = this.lookupReference('window');
         this.windowprint = this.lookupReference('windowprint');
         
-        var tb = this.lookupReference('navigation-toolbar'),
-            buttons = tb.items.items,
-            ui = view.colorScheme;
-
-        //Apply styling buttons
-        if (ui) {
-            buttons[1].setUI(ui);
-            buttons[2].setUI(ui);
-        }
-
     },
     novoProjeto: function () {
         var self = this;
         self.window.show();
-
-    },onNextClick: function(button) {
-        //This is where you can handle any logic prior to moving to the next card
-        var panel = button.up('panel');
-
-        panel.getViewModel().set('atBeginning', false);
+    },
+    
+    showNext: function () {
         
-        this.navigate(button, panel, 'next');
+        this.doCardNavigation(1);
     },
 
-    onPreviousClick: function(button) {
-        var panel = button.up('panel');
-
-        panel.getViewModel().set('atEnd', false);
-        
-        this.navigate(button, panel, 'prev');
+    showPrevious: function (btn) {
+        this.doCardNavigation(-1);
     },
 
-    navigate: function(button, panel, direction) {
-        var layout = panel.getLayout(),
-            progress = this.lookupReference('progress'),
-            model = panel.getViewModel(),
-            progressItems = progress.items.items,
-            item, i, activeItem, activeIndex;
+    doCardNavigation: function (incr) {
+        var me = this.card;
+        var l = me.getLayout();
+        var i = l.activeItem.id.split('card-')[1];
+        var next = parseInt(i, 10) + incr;
+        l.setActiveItem(next);
 
-        layout[direction]();
-
-        activeItem = layout.getActiveItem();
-        activeIndex = panel.items.indexOf(activeItem);
-
-        for (i = 0; i < progressItems.length; i++) {
-            item = progressItems[i];
-
-            if (activeIndex === item.step) {
-                item.setPressed(true);
-            }
-            else {
-                item.setPressed(false);
-            }
-            
-            // IE8 has an odd bug with handling font icons in pseudo elements;
-            // it will render the icon once and not update it when something
-            // like text color is changed via style addition or removal.
-            // We have to force icon repaint by adding a style with forced empty
-            // pseudo element content, (x-sync-repaint) and removing it back to work
-            // around this issue.
-            // See this: https://github.com/FortAwesome/Font-Awesome/issues/954
-            // and this: https://github.com/twbs/bootstrap/issues/13863
-            if (Ext.isIE8) {
-                item.btnIconEl.syncRepaint();
-            }
-        }
-
-        activeItem.focus();
-
-        // beginning disables previous
-        if (activeIndex === 0) {
-            model.set('atBeginning', true);
-        }
-        
-        // wizard is 4 steps. Disable next at end.
-        if (activeIndex === 3) {
-            model.set('atEnd', true);
-        }
+        me.down('#card-prev').setDisabled(next===0);
+        me.down('#card-next').setDisabled(next===2);
     }
 });

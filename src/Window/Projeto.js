@@ -3,8 +3,8 @@ Ext.define('App.Window.Projeto', {
     xtype: 'window-projeto',
     title: 'Cadastrar Projeto',
     iconCls:'x-fa fa-newspaper-o',
-    width: '60%',
-    height:400,
+    width: '40%',
+    height:500,
     layout: 'fit',
     closeAction:'true',
     modal:true,
@@ -13,8 +13,7 @@ Ext.define('App.Window.Projeto', {
     initComponent: function () {
         
         this.panelProjeto = Ext.create('App.Panel.Projeto', {
-            reference: 'panel',
-            bodyPadding: 10
+            reference: 'card',
         });
 
         this.items = [
