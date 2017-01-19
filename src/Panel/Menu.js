@@ -35,6 +35,7 @@ Ext.define('App.Panel.Menu', {
                         itemclick: function (sender, info, eOpts) {
 
                             app.getMainView().tab.add(Ext.create('App.view.Projeto'));
+                            
                         }
                     },
                     store: {
