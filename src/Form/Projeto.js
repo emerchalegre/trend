@@ -16,6 +16,10 @@ Ext.define('App.Form.Projeto', {
         this.QtdServicosExternos = Ext.create('App.Form.Combo.QuantidadeSistemasExternos',{labelWidth:130});
         this.Sistemas = Ext.create('App.Form.Combo.Sistemas',{fieldLabel:'Quais?', labelWidth:60});
         
+        this.nivelAbrangencia = Ext.create('App.Form.Combo.NivelAbrangencia',{labelWidth:130});
+        this.Estabilidade = Ext.create('App.Form.Combo.Estabilidade',{labelWidth:130});
+        this.Conhecimento = Ext.create('App.Form.Combo.Conhecimento',{labelWidth:130});
+        
         this.comboClassificacao = Ext.create('App.Form.Combo.Classificacao');
         this.perguntaPadrao = Ext.create('App.Form.Combo.PerguntaPadrao', {
             fieldLabel: 'É uma demanda legal?',
@@ -150,6 +154,7 @@ Ext.define('App.Form.Projeto', {
                 xtype: 'fieldset',
                 title: 'Objetivo do Documento',
                 layout: 'anchor',
+                hidden:true,
                 defaults: {
                     anchor: '100%'
                 },
@@ -189,7 +194,7 @@ Ext.define('App.Form.Projeto', {
                         items: [
                             {
                                 xtype: 'textarea',
-                                emptyText: 'Descreva a solicitação',
+                                emptyText: 'Descreva a solicitação do projeto',
                                 name: 'entendimentodasolicitacao',
                                 flex: 1
                             }
@@ -216,7 +221,8 @@ Ext.define('App.Form.Projeto', {
                                 xtype: 'textarea',
                                 emptyText: 'Descreva o cenário atual do processo',
                                 name: 'cenarioatual',
-                                flex: 1
+                                flex: 1,
+                                allowBlank:false
                             }
                         ]
                     }
@@ -241,7 +247,8 @@ Ext.define('App.Form.Projeto', {
                                 xtype: 'textarea',
                                 emptyText: 'Descreva a solução proposta para o processo.',
                                 name: 'solucaoproposta',
-                                flex: 1
+                                flex: 1,
+                                allowBlank:false
                             }
                         ]
                     }
@@ -317,41 +324,27 @@ Ext.define('App.Form.Projeto', {
                             margin: '0 5 0 0'
                         },
                         items: [
+                            self.QtdServicosExternos,
                             {
-                                xtype: 'textfield',
-                                emptyText: 'Processo',
-                                name: 'processo',
-                                flex: 1
-                            },
-                            {
-                                xtype: 'textfield',
-                                emptyText: 'Centro de Custo',
-                                name: 'centrodecusto',
-                                flex: 1
+                                xtype:'textfield',
+                                name:'sistemasexternos',
+                                fieldLabel:'Quais?',
+                                flex:1
                             }
                         ]
-                    },
-                    {
+                    },{
                         xtype: 'fieldcontainer',
-                        layout: 'hbox',
+                        layout: 'fit',
                         defaults: {
+                            labelWidth:250,
                             margin: '0 5 0 0'
                         },
                         items: [
-                            {
-                                xtype: 'textfield',
-                                emptyText: 'Alinhamento Estratégico',
-                                name: 'alinhamentoestrategico',
-                                flex: 1
-                            },
-                            {
-                                xtype: 'textfield',
-                                emptyText: 'Contrato Solicitante',
-                                name: 'contratosolicitante',
-                                flex: 1
-                            }
+                            self.nivelAbrangencia,
+                            self.Estabilidade,
+                            self.Conhecimento
                         ]
-                    }
+                    },
                 ]
             }
             

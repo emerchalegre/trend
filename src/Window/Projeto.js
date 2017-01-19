@@ -1,7 +1,7 @@
 Ext.define('App.Window.Projeto', {
     extend: 'Ext.window.Window',
     xtype: 'window-projeto',
-    title: 'Cadastrar Projeto',
+    title: 'Análise de Requisitos de Negócio',
     iconCls: 'x-fa fa-newspaper-o',
     width: '40%',
     height: '80%',
