@@ -11,8 +11,8 @@ App.MessageBox = {
             slideInDuration: 400,
             minWidth: 400,
             constrain: true,
-            iconCls: 'x-fa fa-info-circle',
-            title: 'Aviso'
+            //iconCls: 'x-fa fa-info-circle',
+            //title: 'Aviso'
         });
     },
     warning: function (msg, func) {

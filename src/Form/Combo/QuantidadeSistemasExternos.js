@@ -5,6 +5,7 @@ Ext.define('App.Form.Combo.QuantidadeSistemasExternos', {
     listConfig: {loadMask: true},
     anyMatch: true,
     flex:1,
+    value:1,
     name: 'idquantidadesistema',
     forceSelection: true,
     store: Ext.create('Ext.data.Store', {

@@ -15,32 +15,39 @@ Ext.define('App.Panel.Projeto', {
         this.formProjeto = Ext.create('App.Form.Projeto', {
             reference: 'form',
         });
+        
+        this.formProjetoDetalhes = Ext.create('App.Form.ProjetoDetalhes', {
+            reference: 'formDetalhes',
+        });
 
-        this.panel = Ext.create('Ext.panel.Panel', {
+        this.panelProjeto = Ext.create('Ext.panel.Panel', {
             layout: 'fit',
             border: false,
             items: [
                 self.formProjeto
             ]
         });
-
-        /*this.buttonSalvar = Ext.create('Ext.Button', {
-         text:'Salvar',
-         iconCls: 'x-fa fa-save',
-         scale: 'medium'
-         });*/
-
+        
+        this.panelProjetoDetalhes = Ext.create('Ext.panel.Panel', {
+            layout: 'fit',
+            border: false,
+            items: [
+                self.formProjetoDetalhes
+            ]
+        });
 
         this.items = [
             {
                 id: 'card-0',
                 items: [
-                    self.panel
+                    self.panelProjeto
                 ]
             },
             {
                 id: 'card-1',
-                html: '<p>Step 2 of 3</p><p>Almost there.  Please click the "Next" button to continue...</p>'
+                items: [
+                    self.panelProjetoDetalhes
+                ]
             },
             {
                 id: 'card-2',

@@ -24,6 +24,14 @@ Ext.define('App.Window.Projeto', {
         this.items = [
             this.panelProjeto
         ];
+        
+        this.buttonSalvar = Ext.create('Ext.Button', {
+            handler: 'salvar',
+            text: 'Salvar',
+            iconCls: 'x-fa fa-save',
+            scale: 'medium',
+            disabled:true
+        });
 
         this.buttonPrev = Ext.create('Ext.Button', {
             itemId: 'card-prev',
@@ -44,7 +52,8 @@ Ext.define('App.Window.Projeto', {
 
         this.buttons = ['->',
             self.buttonPrev,
-            self.buttonNext
+            self.buttonNext,
+            self.buttonSalvar
         ],
                 this.callParent();
 
