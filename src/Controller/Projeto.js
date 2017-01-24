@@ -10,6 +10,8 @@ Ext.define('App.Controller.Projeto', {
         this.grid                = this.lookupReference('grid');
         this.window              = this.lookupReference('window');
         this.windowprint         = this.lookupReference('windowprint');
+        this.gridSolicitante     = this.lookupReference('gridSolicitante');
+        
     },
     novoProjeto: function () {
         var self = this;
@@ -26,9 +28,38 @@ Ext.define('App.Controller.Projeto', {
     },
     
     salvar:function(){
-        alert('aa');
+        var self = this;
+        
+        if(self.gridSolicitante.store.data.length === 0 || self.gridSolicitante.store.data.items[0].data.nome == ''){
+            App.MessageBox.warning('É obrigatório inserir ao menos um solicitante.', function(){});
+        }else{
+            alert('salvar');
+        }
+        
     },
-
+    
+    adicionarSolicitante:function(){
+        var self = this;
+        self.gridSolicitante.store.add({});
+        self.gridSolicitante.plugins[0].startEdit(self.gridSolicitante.store.count() - 1, 0);
+    },
+    
+    excluirSolicitante:function(grid, rowIndex, colIndex){
+        var self = this;
+        var record = grid.getStore().getAt(rowIndex);
+        self.gridSolicitante.store.remove(record);
+    },
+    
+    imprimirSolicitante: function () {
+        var self = this;
+        self.windowprint.show();
+    },
+    
+    removerTodos:function(){
+        var self = this;
+        self.gridSolicitante.store.reload();
+    },
+    
     doCardNavigation: function (incr) {
 
         var self = this;
@@ -38,10 +69,12 @@ Ext.define('App.Controller.Projeto', {
         var i = l.activeItem.id.split('card-')[1];
         var next = parseInt(i, 10) + incr;
         
-        
+        l.setActiveItem(next);
+        self.window.buttonPrev.setDisabled(next === 0);
+        self.window.buttonNext.setDisabled(next === 2);
 
         // validar formulario antes de ir para o proximo formulario
-        if (self.formProjeto.isValid() && next === 1 || next === 0) {
+        /*if (self.formProjeto.isValid() && next === 1 || next === 0) {
             
             l.setActiveItem(next);
             self.window.buttonPrev.setDisabled(next === 0);
@@ -57,7 +90,7 @@ Ext.define('App.Controller.Projeto', {
             
         }else{
             App.MessageBox.showToast('Campos inválidos.');
-        }
+        }*/
 
         
 

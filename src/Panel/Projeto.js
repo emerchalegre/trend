@@ -19,7 +19,7 @@ Ext.define('App.Panel.Projeto', {
         this.formProjetoDetalhes = Ext.create('App.Form.ProjetoDetalhes', {
             reference: 'formDetalhes',
         });
-
+        
         this.panelProjeto = Ext.create('Ext.panel.Panel', {
             layout: 'fit',
             border: false,
@@ -33,6 +33,29 @@ Ext.define('App.Panel.Projeto', {
             border: false,
             items: [
                 self.formProjetoDetalhes
+            ]
+        });
+        
+        this.gridProjetoSolicitante = Ext.create('App.Grid.ProjetoSolicitante', {
+            reference: 'gridSolicitante',
+            region:'north'
+        });
+        
+        this.gridProjetoRiscos = Ext.create('App.Grid.ProjetoRiscos', {
+            reference: 'gridRiscos',
+            region:'center'
+        });
+        
+        
+        this.panelGrids = Ext.create('Ext.panel.Panel', {
+            border: false,
+            items: [
+                self.gridProjetoSolicitante,
+                {
+                    xtype: 'splitter',
+                    height:50
+                },
+                self.gridProjetoRiscos
             ]
         });
 
@@ -51,7 +74,9 @@ Ext.define('App.Panel.Projeto', {
             },
             {
                 id: 'card-2',
-                html: '<h1>Congratulations!</h1><p>Step 3 of 3 - Complete</p>'
+                items: [
+                    self.panelGrids
+                ]
             }
         ];
 
