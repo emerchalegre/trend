@@ -45,7 +45,10 @@ Ext.define('App.Grid.ProjetoRiscos', {
                 text: 'Probabilidade',
                 dataIndex: 'probabilidade',
                 flex: 1,
-                editor: self.nivelProbabilidade
+                editor: self.nivelProbabilidade,
+                renderer:function(val, meta, record){
+                    console.log(record);
+                }
             },
             {
                 text: 'Impacto',
