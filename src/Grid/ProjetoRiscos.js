@@ -14,15 +14,16 @@ Ext.define('App.Grid.ProjetoRiscos', {
                 clicksToEdit: 1,
             }];
         
-        this.nivelEscopo = Ext.create('App.Form.Combo.NivelRisco', {name:'probabilidadeescopo'});
+        this.nivelProbabilidade  = Ext.create('App.Form.Combo.NivelRisco', {name:'nivelprobabilidadecombo'});
+        this.nivelImpacto        = Ext.create('App.Form.Combo.NivelRisco', {name:'nivelimpactocombo'});
 
         this.store = Ext.create('Ext.data.Store', {
             storeId: 'grupoStore',
             fields: [
                 {name: 'descricao', type: 'string'},
-                {name: 'probabilidade', type: 'string'},
-                {name: 'impacto', type: 'string'},
-                {name: 'risco', type: 'string'},
+                {name: 'nivelprobabilidade', type: 'string'},
+                {name: 'nivelimpacto', type: 'string'},
+                {name: 'nivelrisco', type: 'string'},
                 {name: 'contramedida', type: 'string'},
             ],
             data: [
@@ -44,16 +45,17 @@ Ext.define('App.Grid.ProjetoRiscos', {
                 text: 'Probabilidade',
                 dataIndex: 'probabilidade',
                 flex: 1,
-                editor: this.nivelEscopo
+                editor: self.nivelProbabilidade
             },
             {
                 text: 'Impacto',
                 dataIndex: 'impacto',
                 flex: 1,
+                editor:self.nivelImpacto
             },
             {
                 text: 'Risco',
-                dataIndex: 'risco',
+                dataIndex: 'nivelrisco',
                 flex: 1,
             },
             {
