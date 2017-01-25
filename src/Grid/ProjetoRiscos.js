@@ -13,6 +13,8 @@ Ext.define('App.Grid.ProjetoRiscos', {
                 ptype: 'cellediting',
                 clicksToEdit: 1,
             }];
+        
+        this.nivelEscopo = Ext.create('App.Form.Combo.NivelRisco', {name:'probabilidadeescopo'});
 
         this.store = Ext.create('Ext.data.Store', {
             storeId: 'grupoStore',
@@ -24,44 +26,13 @@ Ext.define('App.Grid.ProjetoRiscos', {
                 {name: 'contramedida', type: 'string'},
             ],
             data: [
-                {descricao: 'Descrição do Risco <b>Escopo</b>', probabilidade: '', impacto: '', risco: '', contramedida:''},
-                {descricao: 'Descrição do Risco <b>Investimento</b>', probabilidade: '', impacto: '', risco: '', contramedida:''},
-                {descricao: 'Descrição do Risco <b>Ganho</b>', probabilidade: '', impacto: '', risco: '', contramedida:''},
-                {descricao: 'Descrição do Risco <b>Prazo</b>', probabilidade: '', impacto: '', risco: '', contramedida:''},
-                {descricao: 'Descrição do Risco <b>Outros</b>', probabilidade: '', impacto: '', risco: '', contramedida:''},
+                {descricao: 'Descrição do Risco <b>Escopo</b>'},
+                {descricao: 'Descrição do Risco <b>Investimento</b>'},
+                {descricao: 'Descrição do Risco <b>Ganho</b>'},
+                {descricao: 'Descrição do Risco <b>Prazo</b>'},
+                {descricao: 'Descrição do Risco <b>Outros</b>'},
             ]
         });
-
-        this.tbar = {
-            items: [
-                {
-                    cls: 'button-tool',
-                    handler: 'exportarSolicitante',
-                    iconCls: 'x-fa fa-file-excel-o',
-                    tooltip: 'Exportar'
-                },
-                {
-                    cls: 'button-tool',
-                    handler: 'imprimirSolicitante',
-                    iconCls: 'x-fa fa-print',
-                    tooltip: 'Imprimir'
-                },
-                {
-                    cls: 'button-tool',
-                    handler: 'removerTodos',
-                    iconCls: 'x-fa fa-trash-o',
-                    tooltip: 'Remover Todos'
-                },
-                '->',
-                {
-                    //text: 'Novo',
-                    text: 'Adicionar',
-                    iconCls: 'x-fa fa-plus',
-                    scale: 'medium',
-                    handler: 'adicionarSolicitante'
-                }
-            ]
-        };
 
         this.columns = [
             {
@@ -73,6 +44,7 @@ Ext.define('App.Grid.ProjetoRiscos', {
                 text: 'Probabilidade',
                 dataIndex: 'probabilidade',
                 flex: 1,
+                editor: this.nivelEscopo
             },
             {
                 text: 'Impacto',
