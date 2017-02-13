@@ -45,16 +45,18 @@ Ext.define('App.Grid.ProjetoRiscos', {
                 text: 'Probabilidade',
                 dataIndex: 'probabilidade',
                 flex: 1,
-                editor: self.nivelProbabilidade,
-                renderer:function(val, meta, record){
+                editor: Ext.create('App.Form.Combo.NivelRisco', {name:'nivelprobabilidadecombo'}),
+                /*renderer:function(val, meta, record){
                     console.log(record);
-                }
+                    //var rec = self.params.fields.idtiponegocio.store.getAt(self.params.fields.idtiponegocio.store.findExact('idtiponegocio', v));
+                    //return rec.data.descricao;
+                }*/
             },
             {
                 text: 'Impacto',
                 dataIndex: 'impacto',
                 flex: 1,
-                editor:self.nivelImpacto
+                editor:Ext.create('App.Form.Combo.NivelRisco', {name:'nivelimpactocombo'})
             },
             {
                 text: 'Risco',

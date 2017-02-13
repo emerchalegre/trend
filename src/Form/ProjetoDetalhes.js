@@ -173,7 +173,41 @@ Ext.define('App.Form.ProjetoDetalhes', {
                         ]
                     }
                 ]
-            }
+            },
+            {
+                xtype: 'fieldset',
+                title: 'Premissas utilizadas para cálculo do ROI',
+                layout: 'anchor',
+                defaults: {
+                    anchor: '100%'
+                },
+                items: [
+                    {
+                        xtype: 'fieldcontainer',
+                        layout: 'hbox',
+                        defaults: {
+                            margin: '0 5 0 0'
+                        },
+                        items: [
+                            {
+                                xtype: 'textarea',
+                                value: 'Investimento (anual):\n\
+    - Inicial: \n\
+    - Ao longo do ano: \n\
+\n\
+Retorno (ganho anual): \n\
+    - Receita: - \n\
+    - Gastos: \n\
+    - Riscos: \n\
+\n\
+Outras observações:',
+                                name: 'premissas',
+                                flex: 1
+                            }
+                        ]
+                    }
+                ]
+            },
             
         ]
 
