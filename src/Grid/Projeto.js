@@ -10,19 +10,14 @@ Ext.define('App.Grid.Projeto', {
             storeId: 'grupoStore',
             autoLoad: true,
             fields: [
-                {name: 'idusuario', type: 'integer'},
-                {name: 'nomeusuario', type: 'string'},
+                {name: 'idprojeto', type: 'integer'},
+                {name: 'titulo', type: 'string'},
                 {name: 'situacao', type: 'string'},
-                {name: 'idsituacao', type: 'integer'},
-                {name: 'emailusuario', type: 'string'},
-                {name: 'loginusuario', type: 'string'},
-                {name: 'senhausuario', type: 'string'},
-                {name: 'confirmarsenhausuario', type: 'string'},
-                {name: 'datacadastro', type: 'date', dateFormat: 'Y-m-d'},
+                {name: 'dataprojeto', type: 'date', dateFormat: 'Y-m-d'},
             ],
             proxy: {
                 type: 'ajax',
-                url: App.Path + 'usuarios',
+                url: App.Path + 'projetos',
                 //reader: {type: 'json', root: 'data', totalProperty: 'totalCount'},
                 simpleSortMode: true
             },
@@ -37,19 +32,19 @@ Ext.define('App.Grid.Projeto', {
             items: [
                 {
                     cls: 'button-tool',
-                    handler: 'atualizarUsuario',
+                    handler: 'atualizarProjeto',
                     iconCls: 'x-fa fa-refresh',
                     tooltip: 'Atualizar'
                 },
                 {
                     cls: 'button-tool',
-                    handler: 'exportarUsuario',
+                    handler: 'exportarProjeto',
                     iconCls: 'x-fa fa-file-excel-o',
                     tooltip: 'Exportar'
                 },
                 {
                     cls: 'button-tool',
-                    handler: 'imprimirUsuario',
+                    handler: 'imprimirProjeto',
                     iconCls: 'x-fa fa-print',
                     tooltip: 'Imprimir'
                 },
@@ -66,13 +61,13 @@ Ext.define('App.Grid.Projeto', {
 
         this.columns = [
             {
-                text: 'Nome',
-                dataIndex: 'nomeusuario',
+                text: 'Projeto',
+                dataIndex: 'titulo',
                 flex: 1
             },
             {
-                text: 'Data Cadastro',
-                dataIndex: 'datacadastro',
+                text: 'Data Projeto',
+                dataIndex: 'dataprojeto',
                 flex: 1,
                 sortable: true,
                 xtype: 'datecolumn', format: 'd/m/Y',
@@ -93,7 +88,7 @@ Ext.define('App.Grid.Projeto', {
                     {
                         iconCls: 'x-fa fa-edit',
                         tooltip: 'Editar',
-                        handler: 'editarUsuario'
+                        handler: 'editarProjeto'
                     },
                     {
                         xtype: 'splitter'
@@ -101,7 +96,7 @@ Ext.define('App.Grid.Projeto', {
                     {
                         iconCls: 'x-fa fa-remove',
                         tooltip: 'Excluir',
-                        handler: 'excluirUsuario'
+                        handler: 'excluirProjeto'
                     }
                 ]
             }

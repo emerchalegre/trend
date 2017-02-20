@@ -11,6 +11,10 @@ Ext.define('App.Form.Projeto', {
         
         this.items = [
             {
+                xtype: 'hidden',
+                name: 'idprojeto'
+            },
+            {
                 xtype: 'fieldcontainer',
                 layout: 'hbox',
                 defaults: {
@@ -41,10 +45,7 @@ Ext.define('App.Form.Projeto', {
                     anchor: '100%'
                 },
                 items: [
-                    {
-                        xtype: 'hidden',
-                        name: 'idprojeto'
-                    },
+                    
                     {
                         xtype: 'fieldcontainer',
                         layout: 'hbox',

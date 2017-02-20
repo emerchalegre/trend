@@ -1,18 +1,14 @@
-Ext.define('App.Form.Combo.NivelAbrangencia', {
+Ext.define('App.Form.Combo.SistemasMulti', {
     extend:'Ext.form.ComboBox',
-    xtype: 'combo-nivel',
-    fieldLabel: 'Nível de Abrangência',
-    listConfig: {loadMask: true},
-    anyMatch: true,
-    name: 'idnivelabrangencia',
+    xtype: 'combo-sistemas',
+    fieldLabel: 'Sistemas',
     flex:1,
-    forceSelection: true,
     store: Ext.create('Ext.data.Store', {
         autoLoad: true,
-        fields: ['idnivel', 'descricao'],
+        fields: ['idsistema', 'descricao'],
         proxy: {
             type: 'ajax',
-            url: App.Path + 'abrangencia',
+            url: App.Path + 'sistemas',
             reader: {type: 'json'}
         }
     }),
@@ -24,7 +20,12 @@ Ext.define('App.Form.Combo.NivelAbrangencia', {
             }
         }
     },
-    queryMode: 'local',
+    multiSelect: true,
+    anyMatch:true,
+    name:'idsistema[]',
     displayField: 'descricao',
-    valueField: 'idnivel'
+    valueField: 'idsistema',
+    queryMode: 'local',
+    filterPickList: true,
+    
 });

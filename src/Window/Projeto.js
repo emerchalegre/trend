@@ -3,7 +3,7 @@ Ext.define('App.Window.Projeto', {
     xtype: 'window-projeto',
     title: 'Análise de Requisitos de Negócio',
     iconCls: 'x-fa fa-newspaper-o',
-    width: '40%',
+    width: '60%',
     height: '80%',
     closeAction: 'true',
     modal: true,

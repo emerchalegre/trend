@@ -11,30 +11,128 @@ Ext.define('App.Controller.Projeto', {
         this.window              = this.lookupReference('window');
         this.windowprint         = this.lookupReference('windowprint');
         this.gridSolicitante     = this.lookupReference('gridSolicitante');
+        this.gridRiscos          = this.lookupReference('gridRiscos');
         
     },
     novoProjeto: function () {
         var self = this;
+        self.formProjeto.getForm().reset();
+        self.formProjetoDetalhes.getForm().reset();
+        self.gridSolicitante.store.reload();
+        self.gridRiscos.store.reload();
         self.window.show();
     },
+    
+    editarProjeto:function(grid, rowIndex, colIndex){
+        var self = this;
+        var record = grid.getStore().getAt(rowIndex);
+        
+        self.formProjeto.loadRecord(record);
+        self.formProjetoDetalhes.loadRecord(record);
+        self.window.show();
+        
+        //var id = record.get('idprojeto');
+        
+//        App.Ajax.request('GET', 'projetos/form/'+id, null, this.grid, function (retorno) {
+////            self.formProjeto.loadRecord(retorno);
+////            self.window.show();
+//
+//        });
 
-    showNext: function () {
-
-        this.doCardNavigation(1);
-    },
-
-    showPrevious: function (btn) {
-        this.doCardNavigation(-1);
+        
+        
     },
     
+    excluirProjeto:function(grid, rowIndex, colIndex){
+        var self = this;
+        var record = grid.getStore().getAt(rowIndex);
+        var rota = 'projetos/' + record.data.idprojeto;
+        var tituloprojeto = record.data.titulo;
+
+        Ext.MessageBox.confirm('Confirmar', 'Deseja excluir o projeto <b>'+tituloprojeto+'</b> ?', function (btn) {
+
+            if (btn === 'yes') {
+
+                App.Ajax.request('DELETE', rota, null, this.form, function (retorno) {
+                    if (retorno.success) {
+                        App.MessageBox.success('Dados gravados com sucesso', function () {
+                            self.grid.store.reload();
+                        })
+                    } else {
+                        App.MessageBox.error('Ocorreu um erro ao gravar', function () {});
+                    }
+                });
+
+            }
+        });
+    },
+
     salvar:function(){
         var self = this;
+        var gridRiscos = [];
+        var gridSolicitante = [];
+        
+        Ext.getBody().mask('salvando');
+        
+        //adicionando registros da grid para enviar no objeto data
+        $.each(self.gridRiscos.store.getRange(), function(i, obj){
+            gridRiscos.push(obj.data);
+        });
+        
+        $.each(self.gridSolicitante.store.getRange(), function(i, obj){
+            gridSolicitante.push(obj.data);
+        });
+        
+        //parametros para envio
+        var formProjeto         = self.formProjeto.getValues();
+        var formProjetoDetalhes = self.formProjetoDetalhes.getValues();
+        var rota;
+        var type;
+        var data = {
+            formProjeto:formProjeto, 
+            formProjetoDetalhes:formProjetoDetalhes,
+            gridRiscos:gridRiscos,
+            gridSolicitante:gridSolicitante
+        };
+        
+        //validar rota de insert/update
+        var id = self.formProjeto.getForm().findField('idprojeto').getValue();
+        if (id === '') {
+            rota = 'projetos';
+            type = 'POST'
+        } else {
+            rota = 'projetos/' + id;
+            type = 'PATCH';
+        }
         
         if(self.gridSolicitante.store.data.length === 0 || self.gridSolicitante.store.data.items[0].data.nome == ''){
             App.MessageBox.warning('É obrigatório inserir ao menos um solicitante.', function(){});
         }else{
-            alert('salvar');
+            Ext.MessageBox.confirm('Confirmar', 'Deseja Confirmar?', function (btn) {
+
+                    if (btn === 'yes') {
+
+                        App.Ajax.request(type, rota, data, self.card, function (retorno) {
+                            if (retorno.success) {
+                                App.MessageBox.success('Dados gravados com sucesso', function () {
+                                    self.window.hide();
+                                    self.doCardNavigation(-2);
+                                    self.grid.store.reload();
+                                    self.gridSolicitante.store.reload();
+                                    self.gridRiscos.store.reload();
+                                    self.formProjeto.getForm().reset();
+                                    self.formProjetoDetalhes.getForm().reset();
+                                })
+                            } else {
+                                App.MessageBox.error('Ocorreu um erro ao gravar', function () {});
+                            }
+                        });
+
+                    }
+                });
         }
+        
+        Ext.getBody().unmask();
         
     },
     
@@ -60,6 +158,63 @@ Ext.define('App.Controller.Projeto', {
         self.gridSolicitante.store.reload();
     },
     
+    limparProjeto:function(){
+        var self = this;
+        self.formfiltro.getForm().reset();
+    },
+    
+    exportarProjeto:function(){
+        var self = this;
+    },
+    
+    pesquisarProjeto:function(){
+        var self = this;
+        var rota;
+        var nome = self.formfiltro.getForm().findField('nomeprojeto').getValue();
+        
+        if(nome === ''){
+            rota = 'projetos';
+        }else{
+            rota = 'projetos/'+nome;
+        }
+        
+        App.Ajax.request('GET', rota, null, self.grid, function (retorno) {
+            self.grid.store.loadData(retorno);
+        });
+        
+    },
+    
+    atualizarProjeto:function(){
+        var self = this;
+        self.grid.store.reload();
+    },
+    
+    imprimirProjeto:function () {
+        var self = this;
+        self.windowprint.show();
+    },
+    
+    changeSistemas:function(){
+        var self = this;
+        if(self.formProjetoDetalhes.QtdServicosInternos.value === 1){
+            self.formProjetoDetalhes.SistemasMulti.setVisible(false);
+            self.formProjetoDetalhes.Sistemas.setVisible(true);
+        }else{
+            self.formProjetoDetalhes.SistemasMulti.setVisible(true);
+            self.formProjetoDetalhes.Sistemas.setVisible(false);
+
+        }
+    },
+    
+    showNext: function () {
+
+        this.doCardNavigation(1);
+    },
+
+    showPrevious: function (btn) {
+        this.doCardNavigation(-1);
+    },
+    
     doCardNavigation: function (incr) {
 
         var self = this;
@@ -69,12 +224,8 @@ Ext.define('App.Controller.Projeto', {
         var i = l.activeItem.id.split('card-')[1];
         var next = parseInt(i, 10) + incr;
         
-        l.setActiveItem(next);
-        self.window.buttonPrev.setDisabled(next === 0);
-        self.window.buttonNext.setDisabled(next === 2);
-
-        // validar formulario antes de ir para o proximo formulario
-        /*if (self.formProjeto.isValid() && next === 1 || next === 0) {
+        //validar formulario antes de ir para o proximo formulario
+        if (self.formProjeto.isValid() && next === 1 || next === 0) {
             
             l.setActiveItem(next);
             self.window.buttonPrev.setDisabled(next === 0);
@@ -90,9 +241,7 @@ Ext.define('App.Controller.Projeto', {
             
         }else{
             App.MessageBox.showToast('Campos inválidos.');
-        }*/
-
-        
+        }
 
     }
 });

@@ -9,31 +9,34 @@ Ext.define('App.Form.ProjetoDetalhes', {
 
         var self = this;
         
-        this.previsaoResolucao = Ext.create('App.Form.Combo.QuantidadeHoras', {name:'previsaoresolucao', fieldLabel:'Previsão de Resolução(homem hora)', allowBlank:false});
-        this.previsaoFalhas = Ext.create('App.Form.Combo.QuantidadeHoras', {name:'previsaofalhas', fieldLabel:'Previsão de Falhas e Manutenções Necessárias(hh)'});
+        this.previsaoResolucao      = Ext.create('App.Form.Combo.QuantidadeHoras', {name:'idprevisaoresolucao', fieldLabel:'Previsão de Resolução(homem hora)', allowBlank:false});
+        this.previsaoFalhas         = Ext.create('App.Form.Combo.QuantidadeHoras', {name:'idprevisaofalhas', fieldLabel:'Previsão de Falhas e Manutenções Necessárias(hh)'});
         
-        this.QtdServicosInternos = Ext.create('App.Form.Combo.QuantidadeSistemasInternos',{labelWidth:130});
-        this.QtdServicosExternos = Ext.create('App.Form.Combo.QuantidadeSistemasExternos',{labelWidth:130});
-        this.Sistemas = Ext.create('App.Form.Combo.Sistemas',{fieldLabel:'Quais?', labelWidth:60});
+        this.QtdServicosInternos    = Ext.create('App.Form.Combo.QuantidadeSistemasInternos',{labelWidth:130, listeners:{change:'changeSistemas'}});
+        this.QtdServicosExternos    = Ext.create('App.Form.Combo.QuantidadeSistemasExternos',{labelWidth:130});
+        this.Sistemas               = Ext.create('App.Form.Combo.Sistemas',{fieldLabel:'Quais?', labelWidth:60});
+        this.SistemasMulti          = Ext.create('App.Form.Combo.SistemasMulti',{fieldLabel:'Quais?', labelWidth:60, hidden:true});
         
-        this.nivelAbrangencia = Ext.create('App.Form.Combo.NivelAbrangencia',{labelWidth:130});
-        this.Estabilidade = Ext.create('App.Form.Combo.Estabilidade',{labelWidth:130});
-        this.Conhecimento = Ext.create('App.Form.Combo.Conhecimento',{labelWidth:130});
+        this.nivelAbrangencia       = Ext.create('App.Form.Combo.NivelAbrangencia',{labelWidth:130});
+        this.Estabilidade           = Ext.create('App.Form.Combo.Estabilidade',{labelWidth:130});
+        this.Conhecimento           = Ext.create('App.Form.Combo.Conhecimento',{labelWidth:130});
         
-        this.comboClassificacao = Ext.create('App.Form.Combo.Classificacao');
-        this.perguntaPadrao = Ext.create('App.Form.Combo.PerguntaPadrao', {
+        this.comboClassificacao     = Ext.create('App.Form.Combo.Classificacao');
+        this.perguntaPadrao         = Ext.create('App.Form.Combo.PerguntaPadrao', {
             fieldLabel: 'É uma demanda legal?',
+            flex:1,
             name:'demandalegal',
             value:0
         });
 
         this.items = [
+            
             {
                 xtype: 'fieldcontainer',
                 layout: 'hbox',
                 defaults: {
                     margin: '0 5 0 0',
-                    labelWidth:150,
+                    labelWidth:160,
                     width: '100%'
                 },
                 items: [
@@ -45,7 +48,7 @@ Ext.define('App.Form.ProjetoDetalhes', {
                 layout: 'hbox',
                 defaults: {
                     margin: '0 5 0 0',
-                    labelWidth:150,
+                    labelWidth:160,
                 },
                 items: [
                     
@@ -73,11 +76,12 @@ Ext.define('App.Form.ProjetoDetalhes', {
                         xtype: 'fieldcontainer',
                         layout: 'fit',
                         defaults: {
-                            labelWidth:250,
+                            labelWidth:300,
                             margin: '0 5 0 0'
                         },
                         items: [
                             self.previsaoResolucao,
+                            {xtype: 'splitter'},
                             self.previsaoFalhas
                         ]
                     }, {
@@ -88,7 +92,8 @@ Ext.define('App.Form.ProjetoDetalhes', {
                         },
                         items: [
                             self.QtdServicosInternos,
-                            self.Sistemas
+                            self.Sistemas,
+                            self.SistemasMulti
                         ]
                     },
                     {
@@ -110,11 +115,14 @@ Ext.define('App.Form.ProjetoDetalhes', {
                         xtype: 'fieldcontainer',
                         layout: 'fit',
                         defaults: {
-                            labelWidth:250
+                            labelWidth:250,
+                            margin: '0 5 0 0'
                         },
                         items: [
                             self.nivelAbrangencia,
+                            {xtype: 'splitter'},
                             self.Estabilidade,
+                            {xtype: 'splitter'},
                             self.Conhecimento
                         ]
                     },
@@ -142,6 +150,7 @@ Ext.define('App.Form.ProjetoDetalhes', {
                                 name:'custohomemhorades',
                                 fieldLabel:'Custo Homem-hora Desenvolvimento (R$)',
                                 flex:1,
+                                fieldStyle: 'background-color: #e8e8e8',
                                 readOnly:true
                             },
                             {
@@ -149,6 +158,7 @@ Ext.define('App.Form.ProjetoDetalhes', {
                                 name:'custohomemhoraman',
                                 fieldLabel:'Custo Homem-hora Manutenção (R$)',
                                 flex:1,
+                                fieldStyle: 'background-color: #e8e8e8',
                                 readOnly:true
                             },
                             {
@@ -168,6 +178,7 @@ Ext.define('App.Form.ProjetoDetalhes', {
                                 name:'roi',
                                 fieldLabel:'<b>ROI</b>',
                                 flex:1,
+                                fieldStyle: 'background-color: #e8e8e8',
                                 readOnly:true
                             }
                         ]
@@ -191,18 +202,20 @@ Ext.define('App.Form.ProjetoDetalhes', {
                         items: [
                             {
                                 xtype: 'textarea',
+                                name: 'premissas',
+                                flex: 1,
+                                tooltip:'aaaa',
+                                minHeight:210,
                                 value: 'Investimento (anual):\n\
     - Inicial: \n\
     - Ao longo do ano: \n\
 \n\
 Retorno (ganho anual): \n\
-    - Receita: - \n\
+    - Receita: \n\
     - Gastos: \n\
     - Riscos: \n\
 \n\
-Outras observações:',
-                                name: 'premissas',
-                                flex: 1
+Outras observações:'
                             }
                         ]
                     }

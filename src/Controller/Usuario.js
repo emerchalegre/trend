@@ -24,8 +24,8 @@ Ext.define('App.Controller.Usuario', {
         var self = this;
         var record = grid.getStore().getAt(rowIndex);
 
-        self.form.getForm().reset();
         self.form.comboStatus.setValue(record.get('idsituacao'));
+        
         self.form.loadRecord(record);
         self.window.show();
     },

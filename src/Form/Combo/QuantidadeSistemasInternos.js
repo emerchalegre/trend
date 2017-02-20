@@ -6,7 +6,7 @@ Ext.define('App.Form.Combo.QuantidadeSistemasInternos', {
     anyMatch: true,
     flex:1,
     value:1,
-    name: 'idquantidadesistema',
+    name: 'idquantidadesistemasinternos',
     forceSelection: true,
     store: Ext.create('Ext.data.Store', {
         autoLoad: true,

@@ -14,54 +14,95 @@ Ext.define('App.Grid.ProjetoRiscos', {
                 clicksToEdit: 1,
             }];
         
-        this.nivelProbabilidade  = Ext.create('App.Form.Combo.NivelRisco', {name:'nivelprobabilidadecombo'});
-        this.nivelImpacto        = Ext.create('App.Form.Combo.NivelRisco', {name:'nivelimpactocombo'});
-
         this.store = Ext.create('Ext.data.Store', {
             storeId: 'grupoStore',
             fields: [
-                {name: 'descricao', type: 'string'},
-                {name: 'nivelprobabilidade', type: 'string'},
-                {name: 'nivelimpacto', type: 'string'},
-                {name: 'nivelrisco', type: 'string'},
+                {name: 'risco', type: 'string'},
+                {name: 'descricaorisco', type: 'string'},
+                {name: 'idnivelprobabilidade', type: 'string'},
+                {name: 'idnivelimpacto', type: 'string'},
+                {name: 'idnivelrisco', type: 'string'},
                 {name: 'contramedida', type: 'string'},
             ],
             data: [
-                {descricao: 'Descrição do Risco <b>Escopo</b>'},
-                {descricao: 'Descrição do Risco <b>Investimento</b>'},
-                {descricao: 'Descrição do Risco <b>Ganho</b>'},
-                {descricao: 'Descrição do Risco <b>Prazo</b>'},
-                {descricao: 'Descrição do Risco <b>Outros</b>'},
+                {
+                    risco: 'Descrição do Risco <b>Escopo</b>',
+                    descricaorisco:'', 
+                    idnivelprobabilidade:1,
+                    idnivelimpacto:1,
+                    idnivelrisco:1
+                },
+                {
+                    risco: 'Descrição do Risco <b>Investimento</b>',
+                    descricaorisco:'', 
+                    idnivelprobabilidade:1,
+                    idnivelimpacto:1,
+                    idnivelrisco:1
+                },
+                {
+                    risco: 'Descrição do Risco <b>Ganho</b>',
+                    descricaorisco:'', 
+                    idnivelprobabilidade:1,
+                    idnivelimpacto:1,
+                    idnivelrisco:1
+                },
+                {
+                    risco: 'Descrição do Risco <b>Prazo</b>',
+                    descricaorisco:'', 
+                    idnivelprobabilidade:1,
+                    idnivelimpacto:1,
+                    idnivelrisco:1
+                },
+                {
+                    risco: 'Descrição do Risco <b>Outros</b>',
+                    descricaorisco:'', 
+                    idnivelprobabilidade:1,
+                    idnivelimpacto:1,
+                    idnivelrisco:1
+                },
             ]
         });
 
         this.columns = [
             {
-                text: 'Descrição',
-                dataIndex: 'descricao',
+                text: 'Descrição do Risco',
+                dataIndex: 'risco',
                 width:220,
             },
             {
-                text: 'Probabilidade',
-                dataIndex: 'probabilidade',
+                text: 'Descrição',
+                dataIndex: 'descricaorisco',
                 flex: 1,
-                editor: Ext.create('App.Form.Combo.NivelRisco', {name:'nivelprobabilidadecombo'}),
-                /*renderer:function(val, meta, record){
-                    console.log(record);
-                    //var rec = self.params.fields.idtiponegocio.store.getAt(self.params.fields.idtiponegocio.store.findExact('idtiponegocio', v));
-                    //return rec.data.descricao;
-                }*/
+                editor: {
+                    xtype: 'textfield'
+                }
+            },
+            {
+                text: 'Probabilidade',
+                dataIndex: 'idnivelprobabilidade',
+                flex: 1,
+                editor: Ext.create('App.Form.Combo.NivelRisco', {name:'nivelprobabilidadecombo', value:1}),
+                renderer: function (a, b, c, d, e) {
+                    return this.getColumns()[e].getEditor(c, 'probabilidade').getDisplayValue();
+                }
             },
             {
                 text: 'Impacto',
-                dataIndex: 'impacto',
+                dataIndex: 'idnivelimpacto',
                 flex: 1,
-                editor:Ext.create('App.Form.Combo.NivelRisco', {name:'nivelimpactocombo'})
+                editor:Ext.create('App.Form.Combo.NivelRisco', {name:'nivelimpactocombo', value:1}),
+                renderer: function (a, b, c, d, e) {
+                    return this.getColumns()[e].getEditor(c, 'impacto').getDisplayValue();
+                }
             },
             {
                 text: 'Risco',
-                dataIndex: 'nivelrisco',
+                dataIndex: 'idnivelrisco',
                 flex: 1,
+                editor:Ext.create('App.Form.Combo.NivelRisco', {name:'nivelriscocombo', value:1, disabled:true}),
+                renderer: function (a, b, c, d, e) {
+                    return this.getColumns()[e].getEditor(c, 'nivelrisco').getDisplayValue();
+                }
             },
             {
                 text: 'Contramedida',

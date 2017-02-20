@@ -17,7 +17,6 @@ Ext.define('App.Grid.ProjetoSolicitante', {
         this.store = Ext.create('Ext.data.Store', {
             storeId: 'grupoStore',
             fields: [
-                {name: 'idsolicitante', type: 'integer'},
                 {name: 'nome', type: 'string'},
                 {name: 'responsabilidade', type: 'string'},
                 {name: 'contato', type: 'integer'},
