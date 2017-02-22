@@ -79,8 +79,9 @@ App.Ajax = {
                 request.setRequestHeader("Trial", App.Ajax.trial);
 
                 if (elementmask) {
-                    this.myMask = new Ext.LoadMask(elementmask, {msg: "Aguarde..."});
-                    this.myMask.show();
+					elementmask.mask('aguarde...');
+                    //this.myMask = new Ext.LoadMask(elementmask, {msg: "Aguarde..."});
+                    //this.myMask.show();
                 }
             },
             data: dados,
@@ -88,7 +89,8 @@ App.Ajax = {
                 App.Ajax.trial = null;
 
                 if (elementmask) {
-                    this.myMask.hide();
+					elementmask.unmask();
+                    //this.myMask.hide();
                 }
                 callback(dados);
             },
@@ -99,7 +101,8 @@ App.Ajax = {
                 if (xhr.status == 200) {
 
                     if (elementmask) {
-                        this.myMask.hide();
+						elementmask.unmask();
+                        //this.myMask.hide();
                     }
 
                     Ext.MessageBox.show({

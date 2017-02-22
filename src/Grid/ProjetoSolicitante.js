@@ -42,7 +42,7 @@ Ext.define('App.Grid.ProjetoSolicitante', {
                 },
                 {
                     cls: 'button-tool',
-                    handler: 'removerTodos',
+                    handler: 'excluirTodosSolicitantes',
                     iconCls: 'x-fa fa-trash-o',
                     tooltip: 'Remover Todos'
                 },

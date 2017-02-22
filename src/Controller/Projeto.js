@@ -16,6 +16,7 @@ Ext.define('App.Controller.Projeto', {
     },
     novoProjeto: function () {
         var self = this;
+        self.doCardNavigation(-2);
         self.formProjeto.getForm().reset();
         self.formProjetoDetalhes.getForm().reset();
         self.gridSolicitante.store.reload();
@@ -24,22 +25,23 @@ Ext.define('App.Controller.Projeto', {
     },
     
     editarProjeto:function(grid, rowIndex, colIndex){
-        var self = this;
-        var record = grid.getStore().getAt(rowIndex);
         
+        var self   = this;
+        var record = grid.getStore().getAt(rowIndex);
+        var id     = record.get('idprojeto');
+
         self.formProjeto.loadRecord(record);
         self.formProjetoDetalhes.loadRecord(record);
+        
+        App.Ajax.request('GET', 'projetos/solicitantes/'+id, null, self.grid, function (retorno) {
+            self.gridSolicitante.store.loadData(retorno);
+        });
+        
+        App.Ajax.request('GET', 'projetos/riscos/'+id, null, self.grid, function (retorno) {
+            self.gridRiscos.store.loadData(retorno);
+        });
+        
         self.window.show();
-        
-        //var id = record.get('idprojeto');
-        
-//        App.Ajax.request('GET', 'projetos/form/'+id, null, this.grid, function (retorno) {
-////            self.formProjeto.loadRecord(retorno);
-////            self.window.show();
-//
-//        });
-
-        
         
     },
     
@@ -53,7 +55,7 @@ Ext.define('App.Controller.Projeto', {
 
             if (btn === 'yes') {
 
-                App.Ajax.request('DELETE', rota, null, this.form, function (retorno) {
+                App.Ajax.request('DELETE', rota, null, self.grid, function (retorno) {
                     if (retorno.success) {
                         App.MessageBox.success('Dados gravados com sucesso', function () {
                             self.grid.store.reload();
@@ -72,17 +74,19 @@ Ext.define('App.Controller.Projeto', {
         var gridRiscos = [];
         var gridSolicitante = [];
         
-        Ext.getBody().mask('salvando');
-        
         //adicionando registros da grid para enviar no objeto data
         $.each(self.gridRiscos.store.getRange(), function(i, obj){
             gridRiscos.push(obj.data);
         });
         
         $.each(self.gridSolicitante.store.getRange(), function(i, obj){
+            if(obj.data.data){
+                obj.data.data = obj.data.data.toISOString().substring(0, 10);
+            }
+            
             gridSolicitante.push(obj.data);
         });
-        
+      
         //parametros para envio
         var formProjeto         = self.formProjeto.getValues();
         var formProjetoDetalhes = self.formProjetoDetalhes.getValues();
@@ -112,7 +116,7 @@ Ext.define('App.Controller.Projeto', {
 
                     if (btn === 'yes') {
 
-                        App.Ajax.request(type, rota, data, self.card, function (retorno) {
+                        App.Ajax.request(type, rota, data, self.window, function (retorno) {
                             if (retorno.success) {
                                 App.MessageBox.success('Dados gravados com sucesso', function () {
                                     self.window.hide();
@@ -132,8 +136,6 @@ Ext.define('App.Controller.Projeto', {
                 });
         }
         
-        Ext.getBody().unmask();
-        
     },
     
     adicionarSolicitante:function(){
@@ -143,19 +145,77 @@ Ext.define('App.Controller.Projeto', {
     },
     
     excluirSolicitante:function(grid, rowIndex, colIndex){
-        var self = this;
-        var record = grid.getStore().getAt(rowIndex);
-        self.gridSolicitante.store.remove(record);
+        var self          = this;
+        var record        = grid.getStore().getAt(rowIndex);
+        var idsolicitante = record.get('idsolicitante');
+        var rota          = 'projetos/solicitantes/' + idsolicitante;
+        var nome          = record.get('nome');;
+        
+        /*
+         * verifica se esta incluindo ou editando
+         * se estiver editando tem que remover do banco
+         */
+        if(idsolicitante){
+            Ext.MessageBox.confirm('Confirmar', 'Deseja excluir o solicitante <b>'+nome+'</b> ?', function (btn) {
+
+                if (btn === 'yes') {
+
+                    App.Ajax.request('DELETE', rota, null, self.gridSolicitante, function (retorno) {
+                        if (retorno.success) {
+                            App.MessageBox.success('Removido com sucesso', function () {
+                                self.gridSolicitante.store.remove(record);
+                            })
+                        } else {
+                            App.MessageBox.error('Ocorreu um erro ao gravar', function () {});
+                        }
+                    });
+
+                }
+            });
+        }else{
+            self.gridSolicitante.store.remove(record);
+        }
+        
+    },
+    
+    excluirTodosSolicitantes:function(){
+        var self      = this;
+        var idprojeto = self.formProjeto.getForm().findField('idprojeto').getValue();
+        var rota      = 'projetos/solicitantes/todos/' + idprojeto;
+        
+        /*
+         * verifica se esta incluindo ou editando
+         * se estiver editando tem que remover do banco
+         */
+        if(idprojeto){
+            Ext.MessageBox.confirm('Confirmar', 'Deseja excluir todos os solicitantes ?', function (btn) {
+
+                if (btn === 'yes') {
+
+                    App.Ajax.request('DELETE', rota, {idprojeto:idprojeto}, self.gridSolicitante, function (retorno) {
+                        if (retorno.success) {
+                            App.MessageBox.success('Removido com sucesso', function () {
+                                self.gridSolicitante.store.reload();
+                            })
+                        } else {
+                            App.MessageBox.error('Ocorreu um erro ao gravar', function () {});
+                        }
+                    });
+
+                }
+            });
+            
+            
+        }else{
+            self.gridSolicitante.store.reload();
+        }
+        
+        
     },
     
     imprimirSolicitante: function () {
         var self = this;
         self.windowprint.show();
-    },
-    
-    removerTodos:function(){
-        var self = this;
-        self.gridSolicitante.store.reload();
     },
     
     limparProjeto:function(){
