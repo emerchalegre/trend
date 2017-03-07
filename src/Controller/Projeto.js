@@ -16,11 +16,6 @@ Ext.define('App.Controller.Projeto', {
     },
     novoProjeto: function () {
         var self = this;
-        self.doCardNavigation(-2);
-        self.formProjeto.getForm().reset();
-        self.formProjetoDetalhes.getForm().reset();
-        self.gridSolicitante.store.reload();
-        self.gridRiscos.store.reload();
         self.window.show();
     },
     
@@ -88,13 +83,11 @@ Ext.define('App.Controller.Projeto', {
         });
       
         //parametros para envio
-        var formProjeto         = self.formProjeto.getValues();
-        var formProjetoDetalhes = self.formProjetoDetalhes.getValues();
         var rota;
         var type;
         var data = {
-            formProjeto:formProjeto, 
-            formProjetoDetalhes:formProjetoDetalhes,
+            formProjeto:self.formProjeto.getValues(), 
+            formProjetoDetalhes:self.formProjetoDetalhes.getValues(),
             gridRiscos:gridRiscos,
             gridSolicitante:gridSolicitante
         };
@@ -211,6 +204,25 @@ Ext.define('App.Controller.Projeto', {
         }
         
         
+    },
+    
+    close:function(){
+        var self = this;
+        var id = self.formProjeto.getForm().findField('idprojeto').getValue();
+        /*
+         * controlar card no editar
+         * caso abrir o editar e fechar a tela no meio, volta o card pro inicio
+         */
+        if(id && self.window.buttonSalvar.disabled === false){
+            self.doCardNavigation(-2);
+        }else if(self.window.buttonPrev.disabled === false){
+            self.doCardNavigation(-1);
+        }
+        
+        self.formProjeto.getForm().reset();
+        self.formProjetoDetalhes.getForm().reset();
+        self.gridSolicitante.store.reload();
+        self.gridRiscos.store.reload();
     },
     
     imprimirSolicitante: function () {

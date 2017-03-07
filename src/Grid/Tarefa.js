@@ -1,40 +1,25 @@
 Ext.define('App.Grid.Tarefa', {
     xtype: 'grid-tarefa',
     extend: 'Ext.grid.Panel',
-    requires: ['App.Form.Combo.Developer'],
+    border:false,
+    height:400,
     initComponent: function () {
 
         var self = this;
 
-        this.storeComboTask = Ext.create('Ext.data.Store', {
-            fields: ['abbr', 'name'],
-            data: [
-                {"abbr": "AL", "name": "Alabama"},
-                {"abbr": "AK", "name": "Alaska"},
-                {"abbr": "AZ", "name": "Arizona"}
-            ]
-        });
-
-        // Create the combo box, attached to the states data store
-        this.comboTask = Ext.create('Ext.form.ComboBox', {
-            store: self.storeComboTask,
-            queryMode: 'local',
-            displayField: 'name',
-            valueField: 'abbr'
-        });
-
         this.store = Ext.create('Ext.data.Store', {
-            field: ['datainicial', 'datafinal', 'horas', 'tarefa', 'programador', 'detalhe', 'farol', 'concluido', 'previsto', 'horainicial', 'horafinal'],
-            data: [
-                {
-                    datainicial: '2016-09-01',
-                    detalhe: 'É preciso calcular o Ganho anual previsto, em cima da agilidade ganha do volume dessas transações.',
-                    tarefa: 'Tarefa 1',
-                    datafinal: '2016-09-01',
-                    horas: 5,
-                    programador: 'Eduardo',
-                    farol: 1
-                }
+            autoLoad: false,
+            fields: [
+                {name: 'idtarefa', type: 'integer'},
+                {name: 'detalhe', type: 'string'},
+                {name: 'datainicio', type: 'date', dateFormat: 'Y-m-d'},
+                {name: 'horasalmoco', type: 'integer'},
+                {name: 'idprogramador', type: 'integer'},
+                {name: 'horas', type: 'integer'},
+                {name: 'datainiciocalculada', type: 'date', dateFormat: 'Y-m-d'},
+                {name: 'datafinalcalculada', type: 'date', dateFormat: 'Y-m-d'},
+                {name: 'farol', type: 'integer'},
+                
             ]
         });
 
@@ -70,62 +55,41 @@ Ext.define('App.Grid.Tarefa', {
             items: [
                 {
                     cls: 'button-tool',
-                    handler: 'alert',
-                    icon: 'http://megaicons.net/static/img/icons_sizes/8/60/16/imagetools-expand-icon.png'
+                    handler: 'atualizarTarefa',
+                    iconCls: 'x-fa fa-refresh',
+                    tooltip: 'Atualizar'
                 },
                 {
                     cls: 'button-tool',
-                    icon: 'http://megaicons.net/static/img/icons_sizes/8/60/16/imagetools-collapse-icon.png',
-                    handler:'collapseAll'
+                    handler: 'exportarTarefa',
+                    iconCls: 'x-fa fa-file-excel-o',
+                    tooltip: 'Exportar'
+                },
+                {
+                    cls: 'button-tool',
+                    handler: 'imprimirTarefa',
+                    iconCls: 'x-fa fa-print',
+                    tooltip: 'Imprimir'
                 },
                 '->',
                 {
                     text: 'Adicionar Tarefa',
-                    icon: 'http://i.stack.imgur.com/FOWqL.png',
-                    handler: 'addTask' /*function (el) {
-                     
-                     Ext.getCmp('grid').store.add({});
-                     Ext.getCmp('grid').plugins[0].startEditByPosition({
-                     row: Ext.getCmp('grid').store.count(),
-                     column: 1
-                     });
-                     }*/
-                },
-                /*{
-                 icon: 'http://www.iconshock.com/img_jpg/SUPERVISTA/jobs_icons/jpg/16/programmer_icon.jpg',
-                 text: 'Adicionar Programadores'
-                 },*/
-                {
-                    icon: 'http://dkmasti.wapgem.com/logo/icons/clip2.png',
-                    text: 'Adicionar Anexos'
+                    iconCls: 'x-fa fa-plus',
+                    handler:'adicionarTarefa',
+                    scale: 'medium',
                 },
                 {
-                    icon: 'http://icons.iconarchive.com/icons/famfamfam/silk/16/chart-line-icon.png',
-                    text: 'BurnDown',
-                    handler: function () {
-
-                        Ext.create('Ext.window.Window', {
-                            height: '70%',
-                            width: '70%',
-                            title: 'BurnDown',
-                            scrollable: true,
-                            constrain: true,
-                            closable: true,
-                            layout: 'fit',
-                            items: Ext.create('App.Chart.BurnDown')
-                        }).show();
-                    }
+                    text: 'Calcular Horas',
+                    iconCls: 'x-fa fa-calculator',
+                    handler:'calcularHoras',
+                    scale: 'medium',
+                    tooltip:'Cálculo de horas por programador.'
                 }
             ]
         };
 
         this.columns = [
-            /*{
-             text:'Sprint',
-             renderer: function(){
-             return 'Sprint 1'
-             }
-             },*/
+            
             {
                 text: 'Tarefa',
                 dataIndex: 'detalhe',
@@ -134,69 +98,45 @@ Ext.define('App.Grid.Tarefa', {
                     return 'Tarefa ' + (d + 1);
                 },
                 editor: {
+                    allowBlank:false,
                     xtype: 'textarea',
-                    height: 300
-                }
-            },
-            {
-                text: 'Programador',
-                dataIndex: 'programador',
-                flex: 1,
-                editor: {
-                    xtype: 'combo-devs'
-                },
-                renderer: function (a, b, c, d, e) {
-                    console.log(this.getColumns()[e].getEditor());
-                    return this.getColumns()[e].getEditor(c, 'programador').getDisplayValue();
-                }
-            },
-            {
-                text: 'Concluído',
-                dataIndex: 'concluido',
-                flex: 1,
-                renderer: function (v) {
-                    if (v)
-                        return v + '%'
-                },
-                editor: {
-                    xtype: 'numberfield',
-                    maxValue: 100
-                }
-            },
-            {
-                text: 'Previsto',
-                dataIndex: 'previsto',
-                renderer: function (v) {
-                    if (v)
-                        return v + '%'
-                },
-                flex: 1,
-                editor: {
-                    xtype: 'numberfield',
-                    maxValue: 100
+                    height: 300,
+                    name:'descricaotarefa'
                 }
             },
             {
                 text: 'Data Início',
-                dataIndex: 'datainicial',
+                dataIndex: 'datainicio',
                 xtype: 'datecolumn', format: 'd/m/Y',
-                flex: 1,
+                width:120,
                 editor: {
                     xtype: 'datefield'
                 }
             },
             {
-                text: 'Hora Início',
-                dataIndex: 'horainicial',
-                xtype: 'datecolumn', format: 'H:i',
-                flex: 1,
+                text: 'Horário Almoço',
+                width:120,
+                dataIndex: 'horasalmoco',
                 editor: {
-                    xtype: 'timefield'
+                    xtype: 'numberfield',
+                    minValue: 1,
+                    maxValue: 8
+                }
+            },
+            {
+                text: 'Programador',
+                dataIndex: 'idprogramador',
+                flex:1,
+                editor: {
+                    xtype: Ext.create('App.Form.Combo.Programadores')
+                },
+                renderer: function (a, b, c, d, e) {
+                    return this.getColumns()[e].getEditor(c, 'nomeprogramador').getDisplayValue();
                 }
             },
             {
                 text: 'Horas',
-                flex: 1,
+                width:120,
                 dataIndex: 'horas',
                 editor: {
                     xtype: 'numberfield',
@@ -205,58 +145,47 @@ Ext.define('App.Grid.Tarefa', {
                 }
             },
             {
-                text: 'Data Fim',
-                flex: 1,
-                dataIndex: 'datafinal',
+                text: 'Início',
+                width:120,
+                dataIndex: 'datainiciocalculada',
                 xtype: 'datecolumn', format: 'd/m/Y',
                 editor: {
-                    xtype: 'datefield'
+                    xtype: 'datefield',
+                    //readOnly:true
                 }
             },
             {
-                text: 'Hora Fim',
-                dataIndex: 'horafinal',
-                xtype: 'datecolumn', format: 'H:i',
-                flex: 1,
+                text: 'Fim',
+                width:120,
+                dataIndex: 'datafinalcalculada',
+                xtype: 'datecolumn', format: 'd/m/Y',
                 editor: {
-                    xtype: 'timefield'
+                    xtype: 'datefield',
+                    //readOnly:true
                 }
             },
             {
-                text: 'Data Início Real',
-                dataIndex: 'datainicial',
-                xtype: 'datecolumn', format: 'd/m/Y',
-                flex: 1,
-                editor: {
-                    xtype: 'datefield'
-                }
-            },
-            {
-                text: 'Data Fim Real/Tendência',
-                flex: 1,
-                dataIndex: 'datafinal',
-                xtype: 'datecolumn', format: 'd/m/Y',
-                editor: {
-                    xtype: 'datefield'
-                }
-            }, {
-                flex: 1,
+                width:80,
                 text: 'Farol',
                 dataIndex: 'farol',
-                renderer: function (v) {
-                    if (v == 1)
-                        return '<div style="background-color:red;width:20px;height:20px;border-radius: 100%;"></div>';
-                    else
-                        return '<div style="background-color:green;width:20px;height:20px;border-radius: 100%;"></div>';
-                },
+                renderer: 'farol',
                 editor: {
-                    xtype: 'numberfield'
+                    xtype: 'numberfield',
+                    minValue: 0,
+                    maxValue: 1
                 }
             },
             {
-                text: 'Predecessora',
-                flex: 1,
-                editor: self.comboTask
+                xtype: 'actioncolumn',
+                width: 40,
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'x-fa fa-remove',
+                        tooltip: 'Excluir',
+                        handler: 'excluirTarefa'
+                    }
+                ]
             }
         ];
 

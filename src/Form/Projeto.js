@@ -9,6 +9,8 @@ Ext.define('App.Form.Projeto', {
 
         var self = this;
         
+        this.situacao = Ext.create('App.Form.Combo.SituacaoProjeto', {value:1});
+        
         this.items = [
             {
                 xtype: 'hidden',
@@ -21,8 +23,19 @@ Ext.define('App.Form.Projeto', {
                     margin: '0 5 0 0'
                 },
                 items: [
+                    self.situacao,
+                    
+                ]
+            },
+            {
+                xtype: 'fieldcontainer',
+                layout: 'hbox',
+                defaults: {
+                    margin: '0 5 0 0'
+                },
+                items: [
                     {
-                        xtype: 'textfield',
+                        xtype: 'numberfield',
                         fieldLabel: 'N°',
                         labelWidth: 60,
                         name: 'numero',

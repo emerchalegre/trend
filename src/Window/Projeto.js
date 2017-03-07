@@ -55,7 +55,12 @@ Ext.define('App.Window.Projeto', {
             self.buttonNext,
             self.buttonSalvar
         ],
-                this.callParent();
+                
+        this.listeners = {
+            close: 'close'
+        }
+                
+        this.callParent();
 
 
     }
