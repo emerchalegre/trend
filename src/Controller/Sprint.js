@@ -74,6 +74,88 @@ Ext.define('App.Controller.Sprint', {
         self.gridTarefa.store.removeAll();
         self.window.hide();
     },
+    
+    excluirSprint:function(grid, rowIndex, colIndex){
+        
+        var self = this;
+        var record = grid.getStore().getAt(rowIndex);
+        var rota = 'sprint/' + record.data.idsprint;
+        var titulosprint = record.data.titulosprint;
+
+        Ext.MessageBox.confirm('Confirmar', 'Deseja excluir a sprint <b>'+titulosprint+'</b> ?', function (btn) {
+
+            if (btn === 'yes') {
+
+                App.Ajax.request('DELETE', rota, null, self.grid, function (retorno) {
+                    if (retorno.success) {
+                        App.MessageBox.success('Dados gravados com sucesso', function () {
+                            self.grid.store.reload();
+                        })
+                    } else {
+                        App.MessageBox.error('Ocorreu um erro ao gravar', function () {});
+                    }
+                });
+
+            }
+        });
+    },
+    
+    excluirTarefa:function(grid, rowIndex, colIndex){
+        var self          = this;
+        var record        = grid.getStore().getAt(rowIndex);
+        var idtarefa      = record.get('idtarefa');
+        var idsprint      = self.formTarefa.getForm().findField('idsprint').getValue();
+        var rota          = 'sprint/tarefa/' + idtarefa;
+        var rotasprint    = 'sprint/' + idsprint;
+        var titulosprint  = self.formTarefa.getForm().findField('titulosprint').getValue();
+        
+        /*
+         * verifica se esta incluindo ou editando
+         * se estiver editando tem que remover do banco
+         */
+        if(idtarefa){
+            Ext.MessageBox.confirm('Confirmar', 'Deseja excluir esta tarefa ?', function (btn) {
+
+                if (btn === 'yes') {
+                    /*
+                     * se acaso excluir todas as tarefas o script abaixo ira exlcuir tambem a sprint
+                     */
+                    if(self.gridTarefa.store.data.length === 1){
+                
+                        Ext.MessageBox.confirm('Confirmar', 'Ao excluir todas as tarefas, automaticamente será exlcuído a sprint <b>'+ titulosprint + '</b><br>Deseja confirmar?', function (btn) {
+                            if (btn === 'yes') {
+                                App.Ajax.request('DELETE', rotasprint, null, self.gridTarefa, function (retorno) {
+                                    if (retorno.success) {
+                                        App.MessageBox.success('Removido com sucesso', function () {
+                                            self.formTarefa.getForm().reset();
+                                            self.gridTarefa.store.remove(record);
+                                            self.atualizarSprint();
+                                        })
+                                    } else {
+                                        App.MessageBox.error('Ocorreu um erro ao gravar', function () {});
+                                    }
+                                });
+                            }
+                        });
+                    }else{
+                        App.Ajax.request('DELETE', rota, null, self.gridTarefa, function (retorno) {
+                            if (retorno.success) {
+                                App.MessageBox.success('Removido com sucesso', function () {
+                                    self.gridTarefa.store.remove(record);
+                                })
+                            } else {
+                                App.MessageBox.error('Ocorreu um erro ao gravar', function () {});
+                            }
+                        });
+                    }
+
+                }
+            });
+        }else{
+            self.gridTarefa.store.remove(record);
+        }
+        
+    },
    
     salvarSprint:function(){
         var self = this;

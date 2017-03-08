@@ -142,7 +142,7 @@ Ext.define('App.Controller.Projeto', {
         var record        = grid.getStore().getAt(rowIndex);
         var idsolicitante = record.get('idsolicitante');
         var rota          = 'projetos/solicitantes/' + idsolicitante;
-        var nome          = record.get('nome');;
+        var nome          = record.get('nome');
         
         /*
          * verifica se esta incluindo ou editando
