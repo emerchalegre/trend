@@ -7,15 +7,13 @@ Ext.define('App.Panel.Menu', {
     listeners: {
         render: 'onToggleNav',
     },
-    
     items: [{
             title: 'Menu',
             iconCls: 'x-fa fa-codepen',
             region: 'center',
             split: true,
             reference: 'treelistContainer',
-            tools: [
-                {
+            tools: [{
                     iconCls: 'fa fa-bars',
                     cls: 'button-tool',
                     tooltip: 'Comprimir/Expandir',
@@ -32,54 +30,68 @@ Ext.define('App.Panel.Menu', {
                     style: 'padding-top:20px',
                     xtype: 'treelist',
                     listeners: {
-                        itemclick: function (sender, info, eOpts) {
-
-                            app.getMainView().tab.add(Ext.create('App.view.Sprint'));
-                            
+                        itemclick: function (a, b, c, d, e, f, g) {
+                            if (b.node.data && b.node.data.classe) {
+                                var tab = Ext.create(b.node.data.classe);
+                                app.getMainView().tab.add(tab);
+                                app.getMainView().tab.setActiveItem(tab);
+                            }
                         }
                     },
                     store: {
                         root: {
                             expanded: true,
-                            children: [
-                                {
+                            children: [{
                                     text: 'Projeto',
                                     expanded: false,
                                     iconCls: 'x-fa fa-briefcase',
-                                    children: [
-                                        {
+                                    children: [{
                                             text: 'Cadastro de Programadores',
                                             leaf: true,
+                                            classe: 'App.view.Programadores',
                                             iconCls: 'x-fa fa-code'
-                                        },
-                                        {
+                                        }, {
                                             text: 'Cadastro de Projeto',
+                                            classe: 'App.view.Projeto',
                                             leaf: true,
                                             iconCls: 'x-fa fa-file-text'
+                                        },
+                                        {
+                                            text: 'Cadastro de Sprint',
+                                            classe: 'App.view.Sprint',
+                                            leaf: true,
+                                            iconCls: 'x-fa fa-flash'
+                                        },
+                                        {
+                                            text: 'Acompanha Sprint',
+                                            //classe: 'App.view.Sprint',
+                                            leaf: true,
+                                            iconCls: 'x-fa fa-hourglass-2'
                                         }
                                     ]
-                                },
-                                {
+                                }, {
                                     text: 'Sistema',
                                     expanded: false,
                                     iconCls: 'x-fa fa-gear',
-                                    children: [
-                                        {
+                                    children: [{
                                             text: 'Menu',
                                             leaf: true,
                                             iconCls: 'x-fa fa-list-ol'
-                                        },
-                                        {
+                                        }, {
                                             text: 'Usuário',
+                                            classe: 'App.view.Usuario',
                                             leaf: true,
                                             iconCls: 'x-fa fa-user-plus'
-                                        }]
+                                        }
+                                    ]
                                 }
                             ]
                         }
                     },
                     reference: 'treelist',
                     //bind: '{navItems}'
-                }]
-        }]
+                }
+            ]
+        }
+    ]
 });
