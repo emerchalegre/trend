@@ -40,6 +40,7 @@ Ext.define('App.Form.Sprint', {
                                 name:'datasprint',
                                 fieldLabel:'Data da Sprint',
                                 flex:1,
+                                value: new Date(),
                                 allowBlank:false
                             }
                         ]

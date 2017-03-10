@@ -7,7 +7,6 @@ Ext.define('App.view.Login', {
 
         this.form = Ext.create('App.Form.Login', {
             reference: 'form',
-            region:'center'
         });
        
         this.items = [

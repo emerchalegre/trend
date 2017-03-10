@@ -19,6 +19,7 @@ Ext.define('App.Grid.Tarefa', {
                 {name: 'datainiciocalculada', type: 'date', dateFormat: 'Y-m-d'},
                 {name: 'datafinalcalculada', type: 'date', dateFormat: 'Y-m-d'},
                 {name: 'farol', type: 'integer'},
+                {name: 'titulotarefa', type: 'string'},
                 
             ]
         });
@@ -89,7 +90,6 @@ Ext.define('App.Grid.Tarefa', {
         };
 
         this.columns = [
-            
             {
                 text: 'Tarefa',
                 dataIndex: 'detalhe',
@@ -102,6 +102,14 @@ Ext.define('App.Grid.Tarefa', {
                     xtype: 'textarea',
                     height: 300,
                     name:'descricaotarefa'
+                }
+            },
+            {
+                text: 'Título Tarefa',
+                dataIndex: 'titulotarefa',
+                width:180,
+                editor: {
+                    xtype: 'textfield'
                 }
             },
             {

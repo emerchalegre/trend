@@ -7,11 +7,12 @@ Ext.define('App.Form.Login', {
     width: 380,
     height:250,
     bodyPadding: 10,
+    style:'margin-top: 10%;margin-left: 40%;margin-right: 40%;',
     initComponent: function () {
         
         this.defaults = {
             anchor: '100%',
-            labelWidth: 120
+            labelWidth: 80
         };
 
         this.items = [
