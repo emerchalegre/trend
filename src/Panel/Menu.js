@@ -6,6 +6,7 @@ Ext.define('App.Panel.Menu', {
     //collapsible: true,
     listeners: {
         render: 'onToggleNav',
+        afterRender:'onToggleConfig'
     },
     items: [{
             title: 'Menu',
@@ -63,13 +64,29 @@ Ext.define('App.Panel.Menu', {
                                             iconCls: 'x-fa fa-flash'
                                         },
                                         {
-                                            text: 'Acompanha Sprint',
-                                            //classe: 'App.view.Sprint',
+                                            text: 'Acompanha Tarefa',
+                                            classe: 'App.view.AcompanhaTarefa',
                                             leaf: true,
-                                            iconCls: 'x-fa fa-hourglass-2'
+                                            iconCls: 'x-fa fa-list-alt'
+                                        },
+                                        {
+                                            text: 'Acompanha Sprint',
+                                            //classe: 'App.view.AcompanhaTarefa',
+                                            leaf: true,
+                                            iconCls: 'x-fa fa-list-ol'
                                         }
                                     ]
                                 }, {
+                                    text: 'Relatório',
+                                    expanded: false,
+                                    iconCls: 'x-fa fa-bar-chart',
+                                    children: [{
+                                            text: 'Projetos',
+                                            leaf: true,
+                                            iconCls: 'x-fa fa-newspaper-o'
+                                        }
+                                    ]
+                                },{
                                     text: 'Sistema',
                                     expanded: false,
                                     iconCls: 'x-fa fa-gear',
