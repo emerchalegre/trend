@@ -20,7 +20,6 @@ Ext.define('App.Grid.Sprint', {
                 {name: 'idsprint', type: 'integer'},
                 {name: 'idprojeto', type: 'integer'},
                 {name: 'titulosprint', type: 'string'},
-                {name: 'situacao', type: 'string'},
                 {name: 'datasprint', type: 'date', dateFormat: 'Y-m-d'},
             ]
         });
@@ -66,11 +65,6 @@ Ext.define('App.Grid.Sprint', {
                 filter: {
                     type: 'date'
                 }
-            },
-            {
-                text: 'Situação',
-                dataIndex: 'situacao',
-                flex: 1
             },
             {
                 xtype: 'actioncolumn',

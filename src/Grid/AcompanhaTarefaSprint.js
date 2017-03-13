@@ -1,8 +1,11 @@
-Ext.define('App.Grid.Tarefa', {
-    xtype: 'grid-tarefa',
+Ext.define('App.Grid.AcompanhaTarefaSprint', {
+    xtype: 'grid-acompanhatarefasprint',
     extend: 'Ext.grid.Panel',
-    border:false,
-    height:400,
+    title: 'Tarefas',
+    iconCls: 'x-fa fa-hourglass-1',
+    autoScroll: true,
+    autoHeight: true,
+    border: false,
     initComponent: function () {
 
         var self = this;
@@ -18,7 +21,7 @@ Ext.define('App.Grid.Tarefa', {
                 {name: 'horas', type: 'integer'},
                 {name: 'datainiciocalculada', type: 'date', dateFormat: 'Y-m-d'},
                 {name: 'datafinalcalculada', type: 'date', dateFormat: 'Y-m-d'}
-                
+
             ]
         });
 
@@ -52,12 +55,7 @@ Ext.define('App.Grid.Tarefa', {
 
         this.tbar = {
             items: [
-                {
-                    cls: 'button-tool',
-                    handler: 'atualizarTarefa',
-                    iconCls: 'x-fa fa-refresh',
-                    tooltip: 'Atualizar'
-                },
+
                 {
                     cls: 'button-tool',
                     handler: 'exportarTarefa',
@@ -69,20 +67,6 @@ Ext.define('App.Grid.Tarefa', {
                     handler: 'imprimirTarefa',
                     iconCls: 'x-fa fa-print',
                     tooltip: 'Imprimir'
-                },
-                '->',
-                {
-                    text: 'Adicionar Tarefa',
-                    iconCls: 'x-fa fa-plus',
-                    handler:'adicionarTarefa',
-                    scale: 'medium',
-                },
-                {
-                    text: 'Calcular Horas',
-                    iconCls: 'x-fa fa-calculator',
-                    handler:'calcularHoras',
-                    scale: 'medium',
-                    tooltip:'Cálculo de horas por programador.'
                 }
             ]
         };
@@ -96,35 +80,16 @@ Ext.define('App.Grid.Tarefa', {
                     return 'Tarefa ' + (d + 1);
                 },
                 editor: {
-                    allowBlank:false,
+                    allowBlank: false,
                     xtype: 'textarea',
                     height: 300,
-                    name:'descricaotarefa'
-                }
-            },
-            {
-                text: 'Data Início',
-                dataIndex: 'datainicio',
-                xtype: 'datecolumn', format: 'd/m/Y',
-                width:120,
-                editor: {
-                    xtype: 'datefield'
-                }
-            },
-            {
-                text: 'Horário Almoço',
-                width:120,
-                dataIndex: 'horasalmoco',
-                editor: {
-                    xtype: 'numberfield',
-                    minValue: 1,
-                    maxValue: 8
+                    name: 'descricaotarefa'
                 }
             },
             {
                 text: 'Programador',
                 dataIndex: 'idprogramador',
-                flex:1,
+                flex: 1,
                 editor: {
                     xtype: Ext.create('App.Form.Combo.Programadores')
                 },
@@ -134,7 +99,7 @@ Ext.define('App.Grid.Tarefa', {
             },
             {
                 text: 'Horas',
-                width:120,
+                width: 120,
                 dataIndex: 'horas',
                 editor: {
                     xtype: 'numberfield',
@@ -144,7 +109,7 @@ Ext.define('App.Grid.Tarefa', {
             },
             {
                 text: 'Início',
-                width:120,
+                width: 120,
                 dataIndex: 'datainiciocalculada',
                 xtype: 'datecolumn', format: 'd/m/Y',
                 editor: {
@@ -154,25 +119,13 @@ Ext.define('App.Grid.Tarefa', {
             },
             {
                 text: 'Fim',
-                width:120,
+                width: 120,
                 dataIndex: 'datafinalcalculada',
                 xtype: 'datecolumn', format: 'd/m/Y',
                 editor: {
                     xtype: 'datefield',
                     //readOnly:true
                 }
-            },
-            {
-                xtype: 'actioncolumn',
-                width: 40,
-                align: 'center',
-                items: [
-                    {
-                        iconCls: 'x-fa fa-remove',
-                        tooltip: 'Excluir',
-                        handler: 'excluirTarefa'
-                    }
-                ]
             }
         ];
 

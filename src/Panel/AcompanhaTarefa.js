@@ -14,14 +14,33 @@ Ext.define('App.Panel.AcompanhaTarefa', {
     },
     defaults: {
         frame: true,
-        bodyPadding: 10
     },
+    tools: [
+        {
+            type: 'refresh',
+            handler: function () {
+                //parent.App.Tab.reloadById(window.idTab, document.location.href);
+            }
+        }
+    ],
     initComponent: function () {
-        
+
         var self = this;
-        
-        self.gridPlayStop = Ext.create('App.Grid.PlayStop',{
+
+        self.gridPlayStop = Ext.create('App.Grid.PlayStop', {
             reference: 'gridplaystop',
+        });
+
+        self.formAcompanhaTarefa = Ext.create('App.Form.AcompanhaTarefa', {
+            reference: 'formacompanha'
+        });
+
+        self.gridAcompanhaTarefa = Ext.create('App.Grid.AcompanhaTarefa', {
+            reference: 'gridacompanhaSprint',
+        });
+
+        self.gridAcompanhaTarefaSprint = Ext.create('App.Grid.AcompanhaTarefaSprint', {
+            reference: 'gridacompanhaTarefas',
         });
 
         this.items = [
@@ -30,16 +49,21 @@ Ext.define('App.Panel.AcompanhaTarefa', {
                 iconCls: 'x-fa fa-play',
                 flex: 1,
                 margin: '0 8 0 0',
-                layout:'fit',
-                items:[
+                layout: 'fit',
+                items: [
                     self.gridPlayStop
                 ]
             },
             {
                 title: 'Sprint',
                 iconCls: 'x-fa fa-bolt',
+                reference:'acompanhaTarefaSprint',
                 flex: 2,
-                html: 'flex : 2'
+                items: [
+                    self.formAcompanhaTarefa,
+                    self.gridAcompanhaTarefa,
+                    self.gridAcompanhaTarefaSprint
+                ]
             }
         ]
 
