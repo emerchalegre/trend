@@ -11,6 +11,8 @@ Ext.define('App.Form.ProgramadoresFiltro', {
         {
             type: 'refresh',
             handler: function () {
+                //app.getMainView().tab
+                parent.App.Tab.reloadById(window.idTab, document.location.href);
                 //parent.App.Tab.reloadById(window.idTab, document.location.href);
             }
         }

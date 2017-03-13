@@ -127,3 +127,14 @@ App.Ajax = {
 
 };
 
+App.Tab = {
+	
+	reloadById: function (id, newSrc) {
+		//console.log(app.getMainView().tab);
+        //Application.getComponent('tab').getComponent(id).mask('Carregando...');
+        //Application.getComponent('tab').getComponent(id).down().getEl().dom.src = newSrc;        
+
+    }
+	
+}
+

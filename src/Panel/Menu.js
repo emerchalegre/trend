@@ -34,8 +34,8 @@ Ext.define('App.Panel.Menu', {
                         itemclick: function (a, b, c, d, e, f, g) {
                             if (b.node.data && b.node.data.classe) {
                                 var tab = Ext.create(b.node.data.classe);
-                                app.getMainView().tab.add(tab);
-                                app.getMainView().tab.setActiveItem(tab);
+                                    app.getMainView().tab.add(tab);
+                                    app.getMainView().tab.setActiveItem(tab);
                             }
                         }
                     },
