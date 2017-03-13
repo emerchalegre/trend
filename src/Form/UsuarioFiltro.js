@@ -13,6 +13,12 @@ Ext.define('App.Form.UsuarioFiltro', {
             handler: function () {
                 //parent.App.Tab.reloadById(window.idTab, document.location.href);
             }
+        },
+        {
+            type: 'exit',
+            handler: function () {
+                //parent.App.Tab.reloadById(window.idTab, document.location.href);
+            }
         }
     ],
     initComponent: function () {
