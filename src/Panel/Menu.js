@@ -6,7 +6,7 @@ Ext.define('App.Panel.Menu', {
     //collapsible: true,
     listeners: {
         render: 'onToggleNav',
-        afterRender:'onToggleConfig'
+        afterRender: 'onToggleConfig'
     },
     items: [{
             title: 'Menu',
@@ -33,9 +33,19 @@ Ext.define('App.Panel.Menu', {
                     listeners: {
                         itemclick: function (a, b, c, d, e, f, g) {
                             if (b.node.data && b.node.data.classe) {
-                                var tab = Ext.create(b.node.data.classe);
-                                    app.getMainView().tab.add(tab);
-                                    app.getMainView().tab.setActiveItem(tab);
+
+                                var panelPrincipal = app.getMainView().tab.items.findBy(function (el) {
+                                    return el.classe == b.node.data.classe;
+                                });
+
+                                if (!panelPrincipal) {
+                                    panelPrincipal = Ext.create(b.node.data.classe, {
+                                        classe: b.node.data.classe
+                                    });
+                                    app.getMainView().tab.add(panelPrincipal);
+                                };
+                                
+                                app.getMainView().tab.setActiveItem(panelPrincipal)
                             }
                         }
                     },
@@ -56,20 +66,17 @@ Ext.define('App.Panel.Menu', {
                                             classe: 'App.view.Projeto',
                                             leaf: true,
                                             iconCls: 'x-fa fa-file-text'
-                                        },
-                                        {
+                                        }, {
                                             text: 'Cadastro de Sprint',
                                             classe: 'App.view.Sprint',
                                             leaf: true,
                                             iconCls: 'x-fa fa-flash'
-                                        },
-                                        {
+                                        }, {
                                             text: 'Acompanha Tarefa',
                                             classe: 'App.view.AcompanhaTarefa',
                                             leaf: true,
                                             iconCls: 'x-fa fa-list-alt'
-                                        },
-                                        {
+                                        }, {
                                             text: 'Acompanha Sprint',
                                             //classe: 'App.view.AcompanhaTarefa',
                                             leaf: true,
@@ -86,7 +93,7 @@ Ext.define('App.Panel.Menu', {
                                             iconCls: 'x-fa fa-newspaper-o'
                                         }
                                     ]
-                                },{
+                                }, {
                                     text: 'Sistema',
                                     expanded: false,
                                     iconCls: 'x-fa fa-gear',

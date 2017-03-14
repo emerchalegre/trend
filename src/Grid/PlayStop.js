@@ -44,6 +44,7 @@ Ext.define('App.Grid.PlayStop', {
             iconCls: 'x-fa fa-stop',
             tooltip: 'Stop',
             scale: 'large',
+            hidden:true
         });
 
         this.tbar = {
@@ -58,9 +59,33 @@ Ext.define('App.Grid.PlayStop', {
                     }
                 },
                 '->',
-                self.buttonPlay
+                self.buttonPlay,
+                self.buttonStop
             ]
         };
+        this.bbar = {
+            items:[
+                '->',
+                {
+                    cls: 'button-tool',
+                    handler: 'atualizarPlayStop',
+                    iconCls: 'x-fa fa-refresh',
+                    tooltip: 'Atualizar'
+                },
+                {
+                    cls: 'button-tool',
+                    handler: 'exportarPlayStop',
+                    iconCls: 'x-fa fa-file-excel-o',
+                    tooltip: 'Exportar'
+                },
+                {
+                    cls: 'button-tool',
+                    handler: 'imprimirPlayStop',
+                    iconCls: 'x-fa fa-print',
+                    tooltip: 'Imprimir'
+                },
+            ]
+        }
 
         this.columns = [
             {

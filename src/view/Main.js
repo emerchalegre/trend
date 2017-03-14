@@ -13,7 +13,6 @@ Ext.define('App.view.Main', {
                 {
                     region: 'center',
                     reference: 'tab'
-
                 });
 
         this.items = [
@@ -26,7 +25,6 @@ Ext.define('App.view.Main', {
                 xtype: 'panel-principal',
                 region: 'center',
                 title: 'Trend - Gerenciamento de Projetos',
-                //iconCls: 'x-fa fa-trello',
                 header: {
                     titleAlign: 'center'
                 },

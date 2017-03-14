@@ -17,7 +17,13 @@ Ext.define('App.Controller.AcompanhaTarefa', {
         if(self.gridPlayStop.getSelectionModel().getSelection().length === 0){
             App.MessageBox.showToast('Selecione uma tarefa.');
         }else{
-            
+            if(self.gridPlayStop.buttonPlay.isVisible()){
+                self.gridPlayStop.buttonPlay.setVisible(false);
+                self.gridPlayStop.buttonStop.setVisible(true);
+            }else{
+                self.gridPlayStop.buttonPlay.setVisible(true);
+                self.gridPlayStop.buttonStop.setVisible(false);
+            }
         }
     },
     pesquisarTarefa:function(field, newVal, oldVal){

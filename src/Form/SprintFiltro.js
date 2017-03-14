@@ -15,7 +15,7 @@ Ext.define('App.Form.SprintFiltro', {
             }
         },
         {
-            type: 'exit',
+            type: 'close',
             handler: function () {
                 //parent.App.Tab.reloadById(window.idTab, document.location.href);
             }

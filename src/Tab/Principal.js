@@ -3,6 +3,7 @@ Ext.define('App.Tab.Principal', {
     xtype: 'tab-principal',
     plain: true,
     border:false,
+    
     initComponent: function () {
 
         var self = this;

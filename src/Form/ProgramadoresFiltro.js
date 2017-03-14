@@ -18,7 +18,7 @@ Ext.define('App.Form.ProgramadoresFiltro', {
             
         },
         {
-            type: 'exit',
+            type: 'close',
             handler: function () {
                 //parent.App.Tab.reloadById(window.idTab, document.location.href);
             }
