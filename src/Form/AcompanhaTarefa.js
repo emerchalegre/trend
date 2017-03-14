@@ -3,12 +3,21 @@ Ext.define('App.Form.AcompanhaTarefa', {
     xtype: 'form-acompanhatarefa',
     region: 'north',
     autoHeight: true,
-    border:false,
+    border: false,
     bodyPadding: 10,
+    bodyStyle:'text-align: center;',
     initComponent: function () {
 
         this.items = [
+            
             {
+               xtype: 'label', 
+               text: '',
+               iconCls:'x-fa fa-hourglass-1',
+               name:'titulo',
+               style:'font-size: 20px;color: #919191;font-weight: 600'
+            },
+            /*{
                 xtype: 'fieldset',
                 title: 'Projeto',
                 layout: 'anchor',
@@ -25,12 +34,12 @@ Ext.define('App.Form.AcompanhaTarefa', {
                                 fieldLabel: 'Projeto',
                                 name: 'titulo',
                                 width: '100%',
-                                readOnly:true
+                                readOnly: true
                             }
                         ]
                     }
                 ]
-            },
+            },*/
         ]
 
         this.callParent();

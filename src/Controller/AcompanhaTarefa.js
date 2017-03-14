@@ -50,7 +50,8 @@ Ext.define('App.Controller.AcompanhaTarefa', {
                 
         App.Ajax.request('GET', rotaSprint, null, self.panelSprinTarefa, function (retorno) {
             self.gridAcompanhaSprint.store.loadData(retorno);
-            self.formAcompanha.getForm().setValues(retorno[0]);
+            //self.formAcompanha.getForm().setValues(retorno[0]);
+            Ext.getCmp('label-1031').setText('Projeto: '+retorno[0].titulo);
         });
         
         App.Ajax.request('GET', rotaTarefa, null, self.panelSprinTarefa, function (retorno) {

@@ -19,6 +19,7 @@ Ext.define('App.Grid.AcompanhaTarefaSprint', {
                 {name: 'horasalmoco', type: 'integer'},
                 {name: 'idprogramador', type: 'integer'},
                 {name: 'horas', type: 'integer'},
+                {name: 'nomeprogramador', type: 'string'},
                 {name: 'datainiciocalculada', type: 'date', dateFormat: 'Y-m-d'},
                 {name: 'datafinalcalculada', type: 'date', dateFormat: 'Y-m-d'}
 
@@ -78,54 +79,30 @@ Ext.define('App.Grid.AcompanhaTarefaSprint', {
                 flex: 1,
                 renderer: function (a, b, c, d) {
                     return 'Tarefa ' + (d + 1);
-                },
-                editor: {
-                    allowBlank: false,
-                    xtype: 'textarea',
-                    height: 300,
-                    name: 'descricaotarefa'
                 }
             },
             {
                 text: 'Programador',
                 dataIndex: 'idprogramador',
                 flex: 1,
-                editor: {
-                    xtype: Ext.create('App.Form.Combo.Programadores')
-                },
-                renderer: function (a, b, c, d, e) {
-                    return this.getColumns()[e].getEditor(c, 'nomeprogramador').getDisplayValue();
-                }
+                dataIndex:'nomeprogramador'
             },
             {
                 text: 'Horas',
                 width: 120,
-                dataIndex: 'horas',
-                editor: {
-                    xtype: 'numberfield',
-                    minValue: 1,
-                    maxValue: 8
-                }
+                dataIndex: 'horas'
             },
             {
                 text: 'Início',
                 width: 120,
                 dataIndex: 'datainiciocalculada',
-                xtype: 'datecolumn', format: 'd/m/Y',
-                editor: {
-                    xtype: 'datefield',
-                    //readOnly:true
-                }
+                xtype: 'datecolumn', format: 'd/m/Y'
             },
             {
                 text: 'Fim',
                 width: 120,
                 dataIndex: 'datafinalcalculada',
-                xtype: 'datecolumn', format: 'd/m/Y',
-                editor: {
-                    xtype: 'datefield',
-                    //readOnly:true
-                }
+                xtype: 'datecolumn', format: 'd/m/Y'
             }
         ];
 
