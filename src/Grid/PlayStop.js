@@ -3,9 +3,10 @@ Ext.define('App.Grid.PlayStop', {
     xtype: 'grid-playstop',
     autoHeight: true,
     border: false,
-    listeners:{
-        rowclick: 'carregarSprints'
+    listeners: {
+        rowclick: 'carregarSprints',
     },
+    
     initComponent: function () {
 
         var self = this;
@@ -29,7 +30,7 @@ Ext.define('App.Grid.PlayStop', {
                     direction: 'desc'
                 }]
         });
-        
+
         this.buttonPlay = Ext.create('Ext.Button', {
             cls: 'button-tool',
             handler: 'playStop',
@@ -37,14 +38,14 @@ Ext.define('App.Grid.PlayStop', {
             tooltip: 'Play',
             scale: 'large',
         });
-        
+
         this.buttonStop = Ext.create('Ext.Button', {
             cls: 'button-tool',
             handler: 'playStop',
             iconCls: 'x-fa fa-stop',
             tooltip: 'Stop',
             scale: 'large',
-            hidden:true
+            hidden: true
         });
 
         this.tbar = {
@@ -64,7 +65,7 @@ Ext.define('App.Grid.PlayStop', {
             ]
         };
         this.bbar = {
-            items:[
+            items: [
                 '->',
                 {
                     cls: 'button-tool',

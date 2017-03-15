@@ -13,6 +13,7 @@ Ext.define('App.Controller.AcompanhaTarefa', {
     
     playStop:function(){
         var self = this;
+        var rec = self.gridPlayStop.getSelectionModel().getSelection()[0]
         
         if(self.gridPlayStop.getSelectionModel().getSelection().length === 0){
             App.MessageBox.showToast('Selecione uma tarefa.');
@@ -20,9 +21,11 @@ Ext.define('App.Controller.AcompanhaTarefa', {
             if(self.gridPlayStop.buttonPlay.isVisible()){
                 self.gridPlayStop.buttonPlay.setVisible(false);
                 self.gridPlayStop.buttonStop.setVisible(true);
+                Ext.fly(self.gridPlayStop.getView().getRow(rec)).dom.style = 'background-color: rgb(0, 179, 0);font-weight: 600;color: #ffffff!;'
             }else{
                 self.gridPlayStop.buttonPlay.setVisible(true);
                 self.gridPlayStop.buttonStop.setVisible(false);
+                console.log(Ext.fly(self.gridPlayStop.getView().getRow(rec)));
             }
         }
     },
@@ -57,7 +60,7 @@ Ext.define('App.Controller.AcompanhaTarefa', {
         App.Ajax.request('GET', rotaSprint, null, self.panelSprinTarefa, function (retorno) {
             self.gridAcompanhaSprint.store.loadData(retorno);
             //self.formAcompanha.getForm().setValues(retorno[0]);
-            Ext.getCmp('label-1031').setText('Projeto: '+retorno[0].titulo);
+            self.formAcompanha.child('label').setText('Projeto: '+retorno[0].titulo)
         });
         
         App.Ajax.request('GET', rotaTarefa, null, self.panelSprinTarefa, function (retorno) {

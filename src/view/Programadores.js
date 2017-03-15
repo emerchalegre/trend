@@ -3,7 +3,6 @@ Ext.define('App.view.Programadores', {
     requires: ['App.Controller.Programadores'],
     controller: 'programadores',
     layout: 'border',
-	ctype:'app.programadores',
     iconCls: 'x-fa fa-code',
     title: 'Cadastro de Programadores',
     border:false,
