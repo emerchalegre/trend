@@ -164,15 +164,15 @@ Ext.define('App.Controller.Sprint', {
         var gridDados = [];
 
         $.each(self.gridTarefa.store.getRange(), function(i, obj){
-
-             if(obj.data.datainicio){
-                 obj.data.datainicio = obj.data.datainicio.toISOString().substring(0, 10);
+            
+             if(obj.get('datainicio')){
+                 obj.data.datainicio = obj.get('datainicio').toISOString().substring(0, 10);
              }
-             if(obj.data.datainiciocalculada){
-                 obj.data.datainiciocalculada = obj.data.datainiciocalculada.toISOString().substring(0, 10);
+             if(obj.get('datainiciocalculada')){
+                 obj.data.datainiciocalculada = obj.get('datainiciocalculada').toISOString().substring(0, 10);
              }
-             if(obj.data.datafinalcalculada){
-                 obj.data.datafinalcalculada = obj.data.datafinalcalculada.toISOString().substring(0, 10);
+             if(obj.get('datafinalcalculada')){
+                 obj.data.datafinalcalculada = obj.get('datafinalcalculada').toISOString().substring(0, 10);
              }
 
              gridDados.push(obj.data);

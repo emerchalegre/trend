@@ -18,6 +18,8 @@ Ext.define('App.Panel.Menu', {
                     iconCls: 'fa fa-bars',
                     cls: 'button-tool',
                     tooltip: 'Comprimir/Expandir',
+                    reference: 'navBtn',
+                    enableToggle: true,
                     handler: 'onToggleMicro',
                 }
             ],
@@ -43,8 +45,9 @@ Ext.define('App.Panel.Menu', {
                                         classe: b.node.data.classe
                                     });
                                     app.getMainView().tab.add(panelPrincipal);
-                                };
-                                
+                                }
+                                ;
+
                                 app.getMainView().tab.setActiveItem(panelPrincipal)
                             }
                         }
@@ -71,16 +74,23 @@ Ext.define('App.Panel.Menu', {
                                             classe: 'App.view.Sprint',
                                             leaf: true,
                                             iconCls: 'x-fa fa-flash'
-                                        }, {
-                                            text: 'Acompanha Tarefa',
-                                            classe: 'App.view.AcompanhaTarefa',
-                                            leaf: true,
-                                            iconCls: 'x-fa fa-list-alt'
-                                        }, {
-                                            text: 'Acompanha Sprint',
-                                            //classe: 'App.view.AcompanhaTarefa',
-                                            leaf: true,
-                                            iconCls: 'x-fa fa-list-ol'
+                                        },
+                                        {
+                                            text: 'Acompanha',
+                                            iconCls: 'x-fa fa-external-link',
+                                            children: [
+                                                {
+                                                    text: 'Tarefa',
+                                                    classe: 'App.view.AcompanhaTarefa',
+                                                    leaf: true,
+                                                    iconCls: 'x-fa fa-list-alt'
+                                                }, {
+                                                    text: 'Acompanha Sprint',
+                                                    //classe: 'App.view.AcompanhaTarefa',
+                                                    leaf: true,
+                                                    iconCls: 'x-fa fa-list-ol'
+                                                }
+                                            ]
                                         }
                                     ]
                                 }, {
