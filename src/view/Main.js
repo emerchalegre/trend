@@ -1,5 +1,6 @@
 Ext.define('App.view.Main', {
     extend: 'Ext.container.Viewport',
+    xtype: 'app-main',
     requires: [
         'App.Panel.Principal',
         'App.Controller.Menu',
@@ -8,7 +9,7 @@ Ext.define('App.view.Main', {
     controller: 'menu',
     layout: 'border',
     initComponent: function () {
-        
+
         this.tab = Ext.create('App.Tab.Principal',
                 {
                     region: 'center',

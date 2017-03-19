@@ -1,15 +1,15 @@
 Ext.define('App.Form.Login', {
     extend: 'Ext.form.Panel',
     xtype: 'form-login',
-    title: 'Login',
+    title: 'Login - Trend App',
     iconCls: 'x-fa fa-user',
     frame: true,
     width: 380,
     height:250,
     bodyPadding: 10,
-    style:'margin-top: 10%;margin-left: 40%;margin-right: 40%;',
+    style:'margin-top: 10%;margin-left: 35%;margin-right: 40%;',
     initComponent: function () {
-        
+
         this.defaults = {
             anchor: '100%',
             labelWidth: 80
@@ -30,16 +30,16 @@ Ext.define('App.Form.Login', {
                 emptyText: 'Senha',
                 inputType: 'password'
             }],
-                
+
         this.buttons = [
             {
                 text: 'Login',
                 iconCls: 'x-fa fa-share',
-                handler:'login',
+                handler:'onLoginClick',
                 scale: 'medium',
             }
         ],
-                
+
         this.callParent();
     }
 });
