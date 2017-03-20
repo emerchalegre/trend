@@ -5,7 +5,7 @@ Ext.define('App.Panel.Principal', {
 
         this.layout = 'border';
 
-        this.tools = [
+        /*this.tools = [
             {
                 cls: 'button-tool',
                 iconCls: 'fa fa-bars',
@@ -25,7 +25,7 @@ Ext.define('App.Panel.Principal', {
                     ]
                 }
             }
-        ];
+        ];*/
 
 
         this.callParent();

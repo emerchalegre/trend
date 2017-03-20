@@ -1,57 +1,23 @@
 Ext.define('App.view.Main', {
-    extend: 'Ext.container.Viewport',
+    extend: 'Ext.panel.Panel',
     xtype: 'app-main',
     requires: [
+        'Ext.plugin.Viewport',
         'App.Panel.Principal',
         'App.Controller.Menu',
         'App.Panel.Menu'
     ],
     controller: 'menu',
     layout: 'border',
+    plugins: 'viewport',
     initComponent: function () {
 
-        this.tab = Ext.create('App.Tab.Principal',
-                {
-                    region: 'center',
-                    reference: 'tab'
-                });
+        this.treemenu = Ext.create('App.Panel.Menu', {
+          region: 'center',
+          reference: 'tree-menu'
+        })
 
-        this.items = [
-            {
-                xtype: 'tree-menu',
-                region: 'west',
-                width: 300
-            },
-            {
-                xtype: 'panel-principal',
-                region: 'center',
-                title: 'Trend - Gerenciamento de Projetos',
-                header: {
-                    titleAlign: 'center'
-                },
-                items: [
-                    this.tab
-                ]
-            },
-        ]
-
-        /*this.items = [
-         {
-         region: 'center',
-         xtype: 'panel-principal',
-         //title: 'Sistema TCC',
-         //iconCls: 'x-fa fa-home',
-         items: [
-         {
-         xtype: 'tree-menu',
-         region: 'west',
-         //                        iconCls:'x-fa fa-drupal',
-         title: 'Trend',
-         width: 300
-         },
-         this.tab
-         ]
-         }]*/
+        this.items = [this.treemenu]
 
         this.callParent();
     }
